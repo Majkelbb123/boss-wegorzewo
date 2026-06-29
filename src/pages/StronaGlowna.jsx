@@ -11,7 +11,7 @@ import alkoholeZdjecie from '../assets/alkohole zdjecie.jpg'
 const BOSS = {
   nazwa:   'BOSS',                              // nazwa firmy (widoczna na panelu)
   miasto:  'Węgorzewo',                         // miasto
-  opis:    'Sklep wielobranżowy z artykułami spożywczymi, nabiałem, wędlinami oraz artykułami przemysłowymi. Obsługujemy klientów indywidualnych i firmy.',
+  opis:    'Magazyn z zaopatrzeniem na każdą okazję.',
   przycisk: 'Poznaj ofertę →',                  // tekst przycisku
 }
 
