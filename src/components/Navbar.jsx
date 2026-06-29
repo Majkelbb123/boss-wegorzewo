@@ -5,9 +5,27 @@ import { useState } from 'react'
 // USTAWIENIA MENU — edytuj tylko tę sekcję
 // ============================================================
 
-const LOGO_TEKST = 'BOSS & ALKOHOLE ŚWIATA' // tekst w lewym górnym rogu menu
+// Tekst wyświetlany w lewym górnym rogu (logo w menu)
+const LOGO_TEKST = 'BOSS & ALKOHOLE ŚWIATA'
 
-// Lista pozycji w menu — możesz zmieniać nazwy, ale nie zmieniaj wartości "do"
+// Kolor tła całego paska menu
+// Opcje: 'bg-gray-900' (bardzo ciemny, domyślny) | 'bg-gray-800' | 'bg-black' | 'bg-white' | 'bg-amber-900' | 'bg-blue-900' | 'bg-slate-800'
+const MENU_TLO = 'bg-gray-900'
+
+// Rozmiar tekstu logo w menu
+// Opcje: 'text-base' (małe) | 'text-lg' | 'text-xl' (domyślne) | 'text-2xl' | 'text-3xl' (duże)
+const LOGO_ROZMIAR = 'text-xl'
+
+// Wysokość paska menu
+// Opcje: 'h-12' (wąski) | 'h-14' | 'h-16' (domyślny) | 'h-20' | 'h-24' (wysoki)
+const MENU_WYSOKOSC = 'h-16'
+
+// Kolor aktywnego linku (podstrona na której aktualnie jesteś)
+// Opcje: 'text-yellow-400' (żółty, domyślny) | 'text-white' | 'text-amber-300' | 'text-green-400' | 'text-blue-400' | 'text-orange-400'
+const LINK_AKTYWNY_KOLOR = 'text-yellow-400'
+
+// Lista pozycji w menu — możesz zmieniać teksty, ale NIE zmieniaj wartości "do"
+// (wartość "do" to adres strony, zmiana jej sprawi że link przestanie działać)
 const LINKI_MENU = [
   { do: '/',         tekst: 'Strona główna' },
   { do: '/boss',     tekst: 'BOSS' },
@@ -24,11 +42,11 @@ export default function Navbar() {
   const lokalizacja = useLocation()
 
   return (
-    <nav className="bg-gray-900 text-white shadow-lg">
+    <nav className={`${MENU_TLO} text-white shadow-lg`}>
       <div className="max-w-6xl mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
+        <div className={`flex justify-between items-center ${MENU_WYSOKOSC}`}>
 
-          <Link to="/" className="text-xl font-bold text-yellow-400 hover:text-yellow-300">
+          <Link to="/" className={`${LOGO_ROZMIAR} font-bold ${LINK_AKTYWNY_KOLOR} hover:opacity-80 transition-opacity`}>
             {LOGO_TEKST}
           </Link>
 
@@ -38,8 +56,8 @@ export default function Navbar() {
               <Link
                 key={link.do}
                 to={link.do}
-                className={`hover:text-yellow-400 transition-colors ${
-                  lokalizacja.pathname === link.do ? 'text-yellow-400 font-semibold' : ''
+                className={`hover:${LINK_AKTYWNY_KOLOR} transition-colors ${
+                  lokalizacja.pathname === link.do ? `${LINK_AKTYWNY_KOLOR} font-semibold` : ''
                 }`}
               >
                 {link.tekst}
@@ -69,8 +87,8 @@ export default function Navbar() {
                 key={link.do}
                 to={link.do}
                 onClick={() => setMenuOtwarte(false)}
-                className={`py-2 hover:text-yellow-400 transition-colors ${
-                  lokalizacja.pathname === link.do ? 'text-yellow-400 font-semibold' : ''
+                className={`py-2 hover:${LINK_AKTYWNY_KOLOR} transition-colors ${
+                  lokalizacja.pathname === link.do ? `${LINK_AKTYWNY_KOLOR} font-semibold` : ''
                 }`}
               >
                 {link.tekst}
