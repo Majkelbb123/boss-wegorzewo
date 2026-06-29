@@ -244,24 +244,28 @@ export default function StronaGlowna() {
           <h2 className={`${OPISY_TYTUL_STYL}`} style={{ marginBottom: '48px' }}>{OPISY_TYTUL}</h2>
           <div className="grid md:grid-cols-2 gap-8">
 
-            <div className="bg-gray-800 text-white rounded-2xl p-8 shadow-xl">
+            <div className="bg-gray-800 text-white rounded-2xl p-8 shadow-xl flex flex-col">
               <div className="text-4xl mb-4">🛒</div>
               <h3 className="text-2xl font-bold text-yellow-400 mb-3">{OPIS_BOSS.tytul}</h3>
               <p className="text-gray-300 leading-relaxed mb-5">{OPIS_BOSS.tekst}</p>
               <p className="text-gray-400 text-sm mb-6">🕐 {OPIS_BOSS.godziny}</p>
-              <Link to="/boss" className="inline-block bg-yellow-400 text-gray-900 px-6 py-2 rounded-full font-bold hover:bg-yellow-300 transition-colors">
-                Dowiedz się więcej →
-              </Link>
+              <div className="mt-auto flex justify-end">
+                <Link to="/boss" className="bg-yellow-400 text-gray-900 px-8 py-3 rounded-full font-bold text-lg hover:bg-yellow-300 transition-colors">
+                  Dowiedz się więcej →
+                </Link>
+              </div>
             </div>
 
-            <div className="bg-amber-800 text-white rounded-2xl p-8 shadow-xl">
+            <div className="bg-amber-800 text-white rounded-2xl p-8 shadow-xl flex flex-col">
               <div className="text-4xl mb-4">🍷</div>
               <h3 className="text-2xl font-bold text-yellow-400 mb-3">{OPIS_ALKOHOLE.tytul}</h3>
               <p className="text-amber-100 leading-relaxed mb-5">{OPIS_ALKOHOLE.tekst}</p>
               <p className="text-amber-300 text-sm mb-6">🕐 {OPIS_ALKOHOLE.godziny}</p>
-              <Link to="/alkohole" className="inline-block bg-yellow-400 text-gray-900 px-6 py-2 rounded-full font-bold hover:bg-yellow-300 transition-colors">
-                Dowiedz się więcej →
-              </Link>
+              <div className="mt-auto flex justify-end">
+                <Link to="/alkohole" className="bg-yellow-400 text-gray-900 px-8 py-3 rounded-full font-bold text-lg hover:bg-yellow-300 transition-colors">
+                  Dowiedz się więcej →
+                </Link>
+              </div>
             </div>
 
           </div>
