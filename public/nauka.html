@@ -56,12 +56,19 @@
   <script>
     // JavaScript — tu piszemy co strona ma robić
 
-    function kliknij() {
-      document.getElementById("wynik").innerText = "Otrzymujesz 1 bułkę"
-      document.getElementById("wynik").style.color = "#f5c518"
-      document.getElementById("wynik").style.fontSize = "28px"
-    }
-  </script>
+    // Licznik kliknięć — zaczyna od zera
+  let licznik = 0
+
+  function kliknij() {
+    // Dodaj 1 do licznika za każdym kliknięciem
+    licznik = licznik + 1
+
+    // Pokaż wynik na stronie
+    document.getElementById("wynik").innerText = "Kliknąłeś " + licznik + " razy"
+    document.getElementById("wynik").style.color = "#f5c518"
+    document.getElementById("wynik").style.fontSize = "28px"
+  }
+
 
 </body>
 
