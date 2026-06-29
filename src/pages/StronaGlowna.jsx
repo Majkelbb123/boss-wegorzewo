@@ -69,12 +69,12 @@ const OPISY_TLO = 'bg-white'
 // Odstęp nad sekcją "Nasze sklepy" (od suwaka do tytułu)
 // pt = padding-top (tylko góra), im większa liczba tym więcej miejsca
 // Opcje: 'pt-4' (mały) | 'pt-8' | 'pt-10' (domyślny) | 'pt-16' | 'pt-24' (duży)
-const OPISY_ODSTEP_GORA = 'pt-10'
+const OPISY_ODSTEP_GORA = 'pt-100'
 
 // Odstęp pod sekcją "Nasze sklepy" (od kart do następnej sekcji)
 // pb = padding-bottom (tylko dół)
 // Opcje: 'pb-8' (mały) | 'pb-12' | 'pb-16' (domyślny) | 'pb-24' (duży)
-const OPISY_ODSTEP_DOL = 'pb-16'
+const OPISY_ODSTEP_DOL = 'pb-100'
 
 // Tytuł sekcji opisów
 // Wyśrodkowanie tekstu: 'text-center' (środek) | 'text-left' (lewo) | 'text-right' (prawo)
