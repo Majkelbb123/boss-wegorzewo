@@ -29,10 +29,6 @@ const BOSS_ZDJECIE = bossZdjecie
 // Zdjęcie panelu ALKOHOLE ŚWIATA — ustaw na alkoholeZdjecie lub ścieżkę do innego pliku
 const ALKOHOLE_ZDJECIE = alkoholeZdjecie
 
-// Przyciemnienie nad zdjęciami (żeby tekst był czytelny)
-// Opcje: 'opacity-20' (prawie przezroczyste) | 'opacity-40' | 'opacity-50' (domyślne) | 'opacity-60' | 'opacity-75' (bardzo ciemne)
-const PRZYCIEMNIENIE = 'opacity-50'
-
 // ——— ROZMIARY I WYGLĄD SUWAKA ———————————————————————————
 
 // Wysokość suwaka (vh = procent wysokości ekranu)
@@ -176,46 +172,53 @@ export default function StronaGlowna() {
         </div>
       </section>
 
-      {/* Suwak — dwa panele ze zdjęciami, pełna szerokość */}
+      {/* Suwak — dwa panele, pełna szerokość */}
       <div className={`flex flex-col md:flex-row ${SUWAK_WYSOKOSC} min-h-[200px] w-full group`}>
 
         {/* Panel BOSS */}
-        <Link to="/boss" className={`relative flex-1 flex flex-col items-center justify-center overflow-hidden cursor-pointer bg-gray-800 transition-all ${SUWAK_ANIMACJA} ease-in-out md:hover:flex-[2] md:group-hover:flex-[0.6] md:group-hover:[&:hover]:flex-[2]`}>
-          {/* Zdjęcie w tle */}
-          <img src={BOSS_ZDJECIE} alt="BOSS Węgorzewo" className="absolute inset-0 w-full h-full object-cover" />
-          {/* Przyciemnienie nad zdjęciem */}
-          <div className={`absolute inset-0 bg-black ${PRZYCIEMNIENIE}`}></div>
-          {/* Treść */}
-          <div className="relative z-10 text-center px-8 transition-transform duration-500 hover:scale-105">
-            <h2 className={`${SUWAK_BOSS_ROZMIAR} font-black text-yellow-400 tracking-widest mb-2 drop-shadow-lg`}>{BOSS.nazwa}</h2>
-            <p className="text-white text-lg tracking-widest uppercase mb-6 drop-shadow">{BOSS.miasto}</p>
+        <Link to="/boss" className={`group/boss relative flex-1 flex flex-col items-center justify-center overflow-hidden cursor-pointer bg-gray-800 transition-all ${SUWAK_ANIMACJA} ease-in-out md:hover:flex-[2] md:group-hover:flex-[0.6] md:group-hover:[&:hover]:flex-[2]`}>
+          {/* Gradient w tle */}
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-700 to-gray-900"></div>
+          {/* Logo BOSS — powiększa się gdy panel się wysuwa */}
+          <div className="relative z-10 flex flex-col items-center px-8 w-full text-center">
+            <div className="overflow-hidden w-[65%] max-w-xs mb-5">
+              <img
+                src={BOSS_ZDJECIE}
+                alt="BOSS Węgorzewo"
+                className={`w-full h-auto object-contain scale-100 group-hover/boss:scale-110 transition-transform ${SUWAK_ANIMACJA} ease-in-out drop-shadow-2xl`}
+              />
+            </div>
+            <p className="text-gray-300 text-sm tracking-widest uppercase mb-5">{BOSS.miasto}</p>
             <div className="overflow-hidden max-h-0 md:group-hover:max-h-0 md:[&:hover]:max-h-40 transition-all duration-500">
-              <p className="text-gray-200 mb-4 text-sm">{BOSS.opis}</p>
+              <p className="text-gray-300 mb-4 text-sm">{BOSS.opis}</p>
               <span className={`inline-block ${PRZYCISK_KOLOR} ${PRZYCISK_TEKST} px-6 py-2 rounded-full font-bold text-sm`}>Poznaj ofertę →</span>
             </div>
           </div>
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-yellow-400 text-sm tracking-widest uppercase opacity-60 drop-shadow">kliknij</div>
+          <div className="absolute bottom-5 left-1/2 -translate-x-1/2 text-yellow-400 text-xs tracking-widest uppercase opacity-50">kliknij</div>
         </Link>
 
         <div className="hidden md:block w-0.5 bg-yellow-400 opacity-40 flex-shrink-0"></div>
 
         {/* Panel ALKOHOLE ŚWIATA */}
-        <Link to="/alkohole" className={`relative flex-1 flex flex-col items-center justify-center overflow-hidden cursor-pointer bg-amber-900 transition-all ${SUWAK_ANIMACJA} ease-in-out md:hover:flex-[2] md:group-hover:flex-[0.6] md:group-hover:[&:hover]:flex-[2]`}>
-          {/* Zdjęcie w tle */}
-          <img src={ALKOHOLE_ZDJECIE} alt="Alkohole Świata Węgorzewo" className="absolute inset-0 w-full h-full object-cover" />
-          {/* Przyciemnienie nad zdjęciem */}
-          <div className={`absolute inset-0 bg-black ${PRZYCIEMNIENIE}`}></div>
-          {/* Treść */}
-          <div className="relative z-10 text-center px-8 transition-transform duration-500 hover:scale-105">
-            <h2 className={`${SUWAK_ALKOHOLE_ROZMIAR} font-black text-yellow-400 tracking-wide mb-1 drop-shadow-lg`}>{ALKOHOLE.nazwa1}</h2>
-            <h2 className={`${SUWAK_ALKOHOLE_ROZMIAR} font-black text-amber-300 tracking-wide mb-2 drop-shadow-lg`}>{ALKOHOLE.nazwa2}</h2>
-            <p className="text-white text-lg tracking-widest uppercase mb-6 drop-shadow">{ALKOHOLE.miasto}</p>
+        <Link to="/alkohole" className={`group/alkohole relative flex-1 flex flex-col items-center justify-center overflow-hidden cursor-pointer bg-amber-950 transition-all ${SUWAK_ANIMACJA} ease-in-out md:hover:flex-[2] md:group-hover:flex-[0.6] md:group-hover:[&:hover]:flex-[2]`}>
+          {/* Gradient w tle */}
+          <div className="absolute inset-0 bg-gradient-to-br from-amber-900 to-red-950"></div>
+          {/* Logo ALKOHOLE ŚWIATA — powiększa się gdy panel się wysuwa */}
+          <div className="relative z-10 flex flex-col items-center px-8 w-full text-center">
+            <div className="overflow-hidden w-[75%] max-w-sm mb-5">
+              <img
+                src={ALKOHOLE_ZDJECIE}
+                alt="Alkohole Świata Węgorzewo"
+                className={`w-full h-auto object-contain scale-100 group-hover/alkohole:scale-110 transition-transform ${SUWAK_ANIMACJA} ease-in-out drop-shadow-2xl rounded-sm`}
+              />
+            </div>
+            <p className="text-amber-200 text-sm tracking-widest uppercase mb-5">{ALKOHOLE.miasto}</p>
             <div className="overflow-hidden max-h-0 md:group-hover:max-h-0 md:[&:hover]:max-h-40 transition-all duration-500">
               <p className="text-amber-100 mb-4 text-sm">{ALKOHOLE.opis}</p>
               <span className={`inline-block ${PRZYCISK_KOLOR} ${PRZYCISK_TEKST} px-6 py-2 rounded-full font-bold text-sm`}>Poznaj ofertę →</span>
             </div>
           </div>
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-yellow-400 text-sm tracking-widest uppercase opacity-60 drop-shadow">kliknij</div>
+          <div className="absolute bottom-5 left-1/2 -translate-x-1/2 text-yellow-400 text-xs tracking-widest uppercase opacity-50">kliknij</div>
         </Link>
 
       </div>
