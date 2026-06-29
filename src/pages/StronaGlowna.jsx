@@ -66,9 +66,21 @@ const LOGO_ALKOHOLE_ROZMIAR = 'text-2xl'
 // Opcje: 'bg-white' (domyślny) | 'bg-gray-50' | 'bg-gray-100'
 const OPISY_TLO = 'bg-white'
 
-// Górny i dolny odstęp sekcji
-// Opcje: 'py-12' | 'py-16' (domyślny) | 'py-20' | 'py-24'
-const OPISY_PADDING = 'py-16'
+// Odstęp nad sekcją "Nasze sklepy" (od suwaka do tytułu)
+// pt = padding-top (tylko góra), im większa liczba tym więcej miejsca
+// Opcje: 'pt-4' (mały) | 'pt-8' | 'pt-10' (domyślny) | 'pt-16' | 'pt-24' (duży)
+const OPISY_ODSTEP_GORA = 'pt-10'
+
+// Odstęp pod sekcją "Nasze sklepy" (od kart do następnej sekcji)
+// pb = padding-bottom (tylko dół)
+// Opcje: 'pb-8' (mały) | 'pb-12' | 'pb-16' (domyślny) | 'pb-24' (duży)
+const OPISY_ODSTEP_DOL = 'pb-16'
+
+// Tytuł sekcji opisów
+// Wyśrodkowanie tekstu: 'text-center' (środek) | 'text-left' (lewo) | 'text-right' (prawo)
+// Rozmiar tekstu: 'text-2xl' (mały) | 'text-3xl' (domyślny) | 'text-4xl' | 'text-5xl' (duży)
+// Kolor tekstu: 'text-gray-800' (ciemny) | 'text-black' | 'text-yellow-600' | 'text-gray-500' (jasny)
+const OPISY_TYTUL_STYL = 'text-3xl font-bold text-center text-gray-800'
 
 // Tytuł sekcji opisów
 const OPISY_TYTUL = 'Nasze sklepy w Węgorzewie'
@@ -86,6 +98,28 @@ const OPIS_ALKOHOLE = {
   tekst:   'Wyjątkowy sklep dla miłośników alkoholi z całego świata. Wina, whisky, giny, rumy i wiele innych trunków od sprawdzonych producentów. Zapraszamy koneserów i poszukiwaczy nowych smaków.',
   godziny: 'Pn–Pt: 10:00–20:00 | Sob: 10:00–16:00',
 }
+
+// ——— SEKCJA NASZA HISTORIA ———————————————————————————————
+
+// Odstęp nad sekcją "Nasza historia" (od kart do nagłówka)
+// Opcje: 'pt-8' (mały) | 'pt-12' | 'pt-16' (domyślny) | 'pt-24' (duży)
+const HISTORIA_ODSTEP_GORA = 'pt-16'
+
+// Odstęp pod sekcją "Nasza historia" (do stopki)
+// Opcje: 'pb-8' (mały) | 'pb-12' | 'pb-16' (domyślny) | 'pb-24' (duży)
+const HISTORIA_ODSTEP_DOL = 'pb-16'
+
+// Styl nagłówka "NASZA HISTORIA"
+// Wyśrodkowanie: 'text-center' (środek) | 'text-left' (lewo)
+// Rozmiar: 'text-3xl' (mały) | 'text-4xl' (domyślny) | 'text-5xl' | 'text-6xl' (duży)
+// Kolor: 'text-gray-800' (ciemny) | 'text-black' | 'text-yellow-600' | 'text-red-800'
+const HISTORIA_TYTUL_STYL = 'text-4xl font-black text-center text-gray-800'
+
+// Styl tekstu akapitów historii
+// Rozmiar: 'text-base' (normalny) | 'text-lg' (domyślny) | 'text-xl' (duży)
+// Kolor: 'text-gray-600' (jasny szary) | 'text-gray-700' | 'text-gray-800' (ciemny)
+// Wyśrodkowanie: 'text-center' (środek) | 'text-left' (lewo) | 'text-justify' (justowany)
+const HISTORIA_TEKST_STYL = 'text-lg text-gray-600 text-center'
 
 // ============================================================
 // KOD STRONY — nie musisz tu nic zmieniać
@@ -205,9 +239,9 @@ export default function StronaGlowna() {
       </div>
 
       {/* Sekcja opisów pod suwakiem */}
-      <section className={`${OPISY_TLO} pt-10 pb-16 w-full`}>
+      <section className={`${OPISY_TLO} ${OPISY_ODSTEP_GORA} ${OPISY_ODSTEP_DOL} w-full`}>
         <div className="w-full px-8">
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">{OPISY_TYTUL}</h2>
+          <h2 className={`${OPISY_TYTUL_STYL} mb-12`}>{OPISY_TYTUL}</h2>
           <div className="grid md:grid-cols-2 gap-8">
 
             <div className="bg-gray-800 text-white rounded-2xl p-8 shadow-xl">
@@ -235,16 +269,16 @@ export default function StronaGlowna() {
       </section>
 
       {/* Sekcja "Nasza historia" */}
-      <section className="bg-white w-full py-16 px-8">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl font-black text-gray-800 mb-8 tracking-wide">NASZA HISTORIA</h2>
-          <p className="text-gray-600 text-lg leading-relaxed mb-6">
+      <section className={`bg-white w-full ${HISTORIA_ODSTEP_GORA} ${HISTORIA_ODSTEP_DOL} px-8`}>
+        <div className="max-w-3xl mx-auto">
+          <h2 className={`${HISTORIA_TYTUL_STYL} mb-8 tracking-wide`}>NASZA HISTORIA</h2>
+          <p className={`${HISTORIA_TEKST_STYL} leading-relaxed mb-6`}>
             Wszystko zaczęło się w Węgorzewie — małym mieście na Mazurach, gdzie sąsiedzi znają się z imienia, a dobre słowo znaczy więcej niż reklama. To właśnie tutaj, ponad dwie dekady temu, rodzina Bossów otworzyła swój pierwszy sklep. Kilka półek, kilku stałych klientów i jeden prosty cel: dać mieszkańcom to, czego potrzebują, blisko domu.
           </p>
-          <p className="text-gray-600 text-lg leading-relaxed mb-6">
+          <p className={`${HISTORIA_TEKST_STYL} leading-relaxed mb-6`}>
             Z biegiem lat oferta rosła razem z zaufaniem klientów. Do asortymentu spożywczego dołączyły artykuły przemysłowe, a sklep stał się miejscem, do którego zagląda się nie tylko po zakupy — ale też po rozmowę. Wtedy właśnie narodził się pomysł na coś więcej.
           </p>
-          <p className="text-gray-600 text-lg leading-relaxed">
+          <p className={`${HISTORIA_TEKST_STYL} leading-relaxed`}>
             Tak powstały <span className="font-bold text-yellow-600">Alkohole Świata Węgorzewo</span> — sklep dla tych, którzy szukają czegoś wyjątkowego. Whisky ze Szkocji, wina z Toskanii, ruma z Kuby. Mazury spotykają świat — i to właśnie w Węgorzewie.
           </p>
         </div>
