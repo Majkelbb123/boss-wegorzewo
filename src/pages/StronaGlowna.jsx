@@ -39,8 +39,9 @@ export default function StronaGlowna() {
         </div>
       </section>
 
-      {/* Panele suwak — dwa duże panele na całą wysokość */}
-      <section className="flex flex-col md:flex-row h-[70vh] min-h-[400px] group">
+      {/* Panele suwak — wyśrodkowane, 60% oryginalnej wysokości */}
+      <section className="flex justify-center py-10 bg-gray-950">
+      <div className="flex flex-col md:flex-row h-[42vh] min-h-[240px] w-full max-w-4xl rounded-2xl overflow-hidden shadow-2xl group">
 
         {/* Panel BOSS */}
         <Link
@@ -59,8 +60,8 @@ export default function StronaGlowna() {
 
           {/* Ikona */}
           <div className="relative z-10 text-center px-8 transition-transform duration-500 hover:scale-105">
-            <div className="text-8xl mb-6 drop-shadow-lg">🛒</div>
-            <h2 className="text-5xl font-black text-yellow-400 tracking-widest mb-2">BOSS</h2>
+            <div className="text-6xl mb-4 drop-shadow-lg">🛒</div>
+            <h2 className="text-4xl font-black text-yellow-400 tracking-widest mb-2">BOSS</h2>
             <p className="text-gray-300 text-lg tracking-widest uppercase mb-6">Węgorzewo</p>
 
             {/* Treść wysuwa się na hover */}
@@ -98,9 +99,9 @@ export default function StronaGlowna() {
 
           {/* Ikona */}
           <div className="relative z-10 text-center px-8 transition-transform duration-500 hover:scale-105">
-            <div className="text-8xl mb-6 drop-shadow-lg">🍷</div>
-            <h2 className="text-4xl font-black text-yellow-400 tracking-wide mb-1">ALKOHOLE</h2>
-            <h2 className="text-4xl font-black text-amber-300 tracking-wide mb-2">ŚWIATA</h2>
+            <div className="text-6xl mb-4 drop-shadow-lg">🍷</div>
+            <h2 className="text-3xl font-black text-yellow-400 tracking-wide mb-1">ALKOHOLE</h2>
+            <h2 className="text-3xl font-black text-amber-300 tracking-wide mb-2">ŚWIATA</h2>
             <p className="text-amber-200 text-lg tracking-widest uppercase mb-6">Węgorzewo</p>
 
             {/* Treść wysuwa się na hover */}
@@ -118,6 +119,7 @@ export default function StronaGlowna() {
           </div>
         </Link>
 
+      </div>
       </section>
 
       {/* Sekcja kontakt na dole */}
