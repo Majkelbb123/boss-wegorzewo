@@ -205,7 +205,7 @@ export default function StronaGlowna() {
       </div>
 
       {/* Sekcja opisów pod suwakiem */}
-      <section className={`${OPISY_TLO} ${OPISY_PADDING} w-full`}>
+      <section className={`${OPISY_TLO} pt-10 pb-16 w-full`}>
         <div className="w-full px-8">
           <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">{OPISY_TYTUL}</h2>
           <div className="grid md:grid-cols-2 gap-8">
