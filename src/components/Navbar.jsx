@@ -5,16 +5,9 @@ import { useState } from 'react'
 // USTAWIENIA MENU — edytuj tylko tę sekcję
 // ============================================================
 
-// Tekst wyświetlany w lewym górnym rogu (logo w menu)
-const LOGO_TEKST = 'BOSS & ALKOHOLE ŚWIATA'
-
 // Kolor tła całego paska menu
 // Opcje: 'bg-gray-900' (bardzo ciemny, domyślny) | 'bg-gray-800' | 'bg-black' | 'bg-white' | 'bg-amber-900' | 'bg-blue-900' | 'bg-slate-800'
 const MENU_TLO = 'bg-gray-900'
-
-// Rozmiar tekstu logo w menu
-// Opcje: 'text-base' (małe) | 'text-lg' | 'text-xl' (domyślne) | 'text-2xl' | 'text-3xl' (duże)
-const LOGO_ROZMIAR = 'text-xl'
 
 // Wysokość paska menu
 // Opcje: 'h-12' (wąski) | 'h-14' | 'h-16' (domyślny) | 'h-20' | 'h-24' (wysoki)
@@ -26,11 +19,9 @@ const LINK_AKTYWNY_KOLOR = 'text-yellow-400'
 
 // Lista pozycji w menu — możesz zmieniać teksty, ale NIE zmieniaj wartości "do"
 // (wartość "do" to adres strony, zmiana jej sprawi że link przestanie działać)
+// Możesz dodać z powrotem: { do: '/boss', tekst: 'BOSS' }, { do: '/alkohole', tekst: 'Alkohole Świata' }, { do: '/kontakt', tekst: 'Kontakt' }
 const LINKI_MENU = [
-  { do: '/',         tekst: 'Strona główna' },
-  { do: '/boss',     tekst: 'BOSS' },
-  { do: '/alkohole', tekst: 'Alkohole Świata' },
-  { do: '/kontakt',  tekst: 'Kontakt' },
+  { do: '/', tekst: 'Strona główna' },
 ]
 
 // ============================================================
@@ -44,11 +35,7 @@ export default function Navbar() {
   return (
     <nav className={`${MENU_TLO} text-white shadow-lg`}>
       <div className="max-w-6xl mx-auto px-4">
-        <div className={`flex justify-between items-center ${MENU_WYSOKOSC}`}>
-
-          <Link to="/" className={`${LOGO_ROZMIAR} font-bold ${LINK_AKTYWNY_KOLOR} hover:opacity-80 transition-opacity`}>
-            {LOGO_TEKST}
-          </Link>
+        <div className={`flex justify-start items-center ${MENU_WYSOKOSC}`}>
 
           {/* Menu na dużych ekranach */}
           <div className="hidden md:flex space-x-6">
