@@ -181,19 +181,6 @@ export default function StronaGlowna() {
             className={`absolute inset-0 w-full h-full object-contain object-center scale-100 group-hover/alkohole:scale-110 transition-transform duration-700 ease-out`}
           />
 
-          {/* Ogień po lewej stronie */}
-          <div className="absolute left-0 bottom-0 w-16 h-full z-10 pointer-events-none flex flex-col justify-end">
-            <div className="ogien w-full h-3/4" style={{ background: 'linear-gradient(to top, #ff4500, #ff8c00, #ffd700, transparent)' }} />
-            <div className="ogien-wolny absolute left-1 bottom-0 w-6 h-1/2" style={{ background: 'linear-gradient(to top, #ff6000, #ffa500, transparent)' }} />
-            <div className="ogien-szybki absolute left-6 bottom-0 w-5 h-2/5" style={{ background: 'linear-gradient(to top, #ff3000, #ff7000, transparent)' }} />
-          </div>
-
-          {/* Ogień po prawej stronie */}
-          <div className="absolute right-0 bottom-0 w-16 h-full z-10 pointer-events-none flex flex-col justify-end">
-            <div className="ogien w-full h-3/4" style={{ background: 'linear-gradient(to top, #ff4500, #ff8c00, #ffd700, transparent)' }} />
-            <div className="ogien-wolny absolute right-1 bottom-0 w-6 h-1/2" style={{ background: 'linear-gradient(to top, #ff6000, #ffa500, transparent)' }} />
-            <div className="ogien-szybki absolute right-6 bottom-0 w-5 h-2/5" style={{ background: 'linear-gradient(to top, #ff3000, #ff7000, transparent)' }} />
-          </div>
 
           {/* Gradient od dołu */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
