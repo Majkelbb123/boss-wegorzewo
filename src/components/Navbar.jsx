@@ -1,31 +1,40 @@
 import { Link, useLocation } from 'react-router-dom'
 import { useState } from 'react'
 
-// Górne menu nawigacyjne — widoczne na każdej stronie
+// ============================================================
+// USTAWIENIA MENU — edytuj tylko tę sekcję
+// ============================================================
+
+const LOGO_TEKST = 'BOSS & ALKOHOLE ŚWIATA' // tekst w lewym górnym rogu menu
+
+// Lista pozycji w menu — możesz zmieniać nazwy, ale nie zmieniaj wartości "do"
+const LINKI_MENU = [
+  { do: '/',         tekst: 'Strona główna' },
+  { do: '/boss',     tekst: 'BOSS' },
+  { do: '/alkohole', tekst: 'Alkohole Świata' },
+  { do: '/kontakt',  tekst: 'Kontakt' },
+]
+
+// ============================================================
+// KOD MENU — nie musisz tu nic zmieniać
+// ============================================================
+
 export default function Navbar() {
   const [menuOtwarte, setMenuOtwarte] = useState(false)
   const lokalizacja = useLocation()
-
-  const linki = [
-    { do: '/', tekst: 'Strona główna' },
-    { do: '/boss', tekst: 'BOSS' },
-    { do: '/alkohole', tekst: 'Alkohole Świata' },
-    { do: '/kontakt', tekst: 'Kontakt' },
-  ]
 
   return (
     <nav className="bg-gray-900 text-white shadow-lg">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
 
-          {/* Logo / Nazwa */}
           <Link to="/" className="text-xl font-bold text-yellow-400 hover:text-yellow-300">
-            BOSS & ALKOHOLE ŚWIATA
+            {LOGO_TEKST}
           </Link>
 
           {/* Menu na dużych ekranach */}
           <div className="hidden md:flex space-x-6">
-            {linki.map(link => (
+            {LINKI_MENU.map(link => (
               <Link
                 key={link.do}
                 to={link.do}
@@ -38,7 +47,7 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Przycisk hamburgera na małych ekranach */}
+          {/* Przycisk hamburgera na telefonach */}
           <button
             className="md:hidden text-white"
             onClick={() => setMenuOtwarte(!menuOtwarte)}
@@ -52,10 +61,10 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Menu mobilne — pokazuje się po kliknięciu hamburgera */}
+        {/* Menu mobilne — pojawia się po kliknięciu hamburgera */}
         {menuOtwarte && (
           <div className="md:hidden pb-4 flex flex-col space-y-2">
-            {linki.map(link => (
+            {LINKI_MENU.map(link => (
               <Link
                 key={link.do}
                 to={link.do}
