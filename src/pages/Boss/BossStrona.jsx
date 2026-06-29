@@ -131,7 +131,7 @@ export default function BossStrona() {
       <div className="text-center" style={{ marginBottom: '60px' }}>
         <div className={`${IKONA_ROZMIAR}`} style={{ marginBottom: '16px' }}>{INFORMACJE.ikona}</div>
         <h1 className={`${TYTUL_ROZMIAR} font-bold text-gray-800`} style={{ marginBottom: '16px' }}>{INFORMACJE.nazwa}</h1>
-        <p className={`text-gray-600 ${OPIS_ROZMIAR} max-w-2xl mx-auto text-center`}>{INFORMACJE.opis}</p>
+        <p className="text-gray-600 text-lg" style={{ textAlign: 'center', maxWidth: '560px', margin: '0 auto' }}>{INFORMACJE.opis}</p>
       </div>
 
       {/* Sekcja z kartami kategorii */}
