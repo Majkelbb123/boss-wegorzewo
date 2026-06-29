@@ -69,7 +69,7 @@ const OPISY_TLO = 'bg-white'
 // Odstęp nad sekcją "Nasze sklepy" (od suwaka do tytułu)
 // pt = padding-top (tylko góra), im większa liczba tym więcej miejsca
 // Opcje: 'pt-4' (mały) | 'pt-8' | 'pt-10' (domyślny) | 'pt-16' | 'pt-24' (duży)
-const OPISY_ODSTEP_GORA = 'pt-24'
+const OPISY_ODSTEP_GORA = 'pt-96'
 
 // Odstęp pod sekcją "Nasze sklepy" (od kart do następnej sekcji)
 // pb = padding-bottom (tylko dół)
@@ -239,9 +239,9 @@ export default function StronaGlowna() {
       </div>
 
       {/* Sekcja opisów pod suwakiem */}
-      <section className={`${OPISY_TLO} ${OPISY_ODSTEP_GORA} ${OPISY_ODSTEP_DOL} w-full`}>
+      <section className={`${OPISY_TLO} w-full`} style={{ paddingTop: '60px', paddingBottom: '60px' }}>
         <div className="w-full px-8">
-          <h2 className={`${OPISY_TYTUL_STYL} mb-12`}>{OPISY_TYTUL}</h2>
+          <h2 className={`${OPISY_TYTUL_STYL}`} style={{ marginBottom: '48px' }}>{OPISY_TYTUL}</h2>
           <div className="grid md:grid-cols-2 gap-8">
 
             <div className="bg-gray-800 text-white rounded-2xl p-8 shadow-xl">
@@ -269,9 +269,9 @@ export default function StronaGlowna() {
       </section>
 
       {/* Sekcja "Nasza historia" */}
-      <section className={`bg-white w-full ${HISTORIA_ODSTEP_GORA} ${HISTORIA_ODSTEP_DOL} px-8`}>
+      <section className="bg-white w-full px-8" style={{ paddingTop: '60px', paddingBottom: '60px' }}>
         <div className="w-full">
-          <h2 className={`${HISTORIA_TYTUL_STYL} mb-8 tracking-wide`}>NASZA HISTORIA</h2>
+          <h2 className={`${HISTORIA_TYTUL_STYL} tracking-wide`} style={{ marginBottom: '48px' }}>NASZA HISTORIA</h2>
           <p className={`${HISTORIA_TEKST_STYL} leading-relaxed mb-6`}>
             Wszystko zaczęło się w Węgorzewie — małym mieście na Mazurach, gdzie sąsiedzi znają się z imienia, a dobre słowo znaczy więcej niż reklama. To właśnie tutaj, ponad dwie dekady temu, rodzina Bossów otworzyła swój pierwszy sklep. Kilka półek, kilku stałych klientów i jeden prosty cel: dać mieszkańcom to, czego potrzebują, blisko domu.
           </p>
