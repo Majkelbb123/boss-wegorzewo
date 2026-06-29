@@ -139,7 +139,7 @@ export default function StronaGlowna() {
           <img
             src={bossZdjecie}
             alt="BOSS Węgorzewo"
-            className={`absolute inset-0 w-full h-full object-cover object-center scale-100 group-hover/boss:scale-110 transition-transform duration-700 ease-out`}
+            className={`absolute inset-0 w-full h-full object-contain object-center scale-100 group-hover/boss:scale-110 transition-transform duration-700 ease-out`}
           />
 
           {/* Gradient od dołu — przyciemnia dolną część żeby tekst był czytelny */}
@@ -177,7 +177,7 @@ export default function StronaGlowna() {
           <img
             src={alkoholeZdjecie}
             alt="Alkohole Świata Węgorzewo"
-            className={`absolute inset-0 w-full h-full object-cover object-center scale-100 group-hover/alkohole:scale-110 transition-transform duration-700 ease-out`}
+            className={`absolute inset-0 w-full h-full object-contain object-center scale-100 group-hover/alkohole:scale-110 transition-transform duration-700 ease-out`}
           />
 
           {/* Gradient od dołu */}
