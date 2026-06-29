@@ -234,8 +234,20 @@ export default function StronaGlowna() {
         </div>
       </section>
 
-      {/* Pusta sekcja — miejsce na przyszłą zawartość */}
-      <section className="bg-white w-full h-screen">
+      {/* Sekcja "Nasza historia" */}
+      <section className="bg-white w-full py-16 px-8">
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-4xl font-black text-gray-800 mb-8 tracking-wide">NASZA HISTORIA</h2>
+          <p className="text-gray-600 text-lg leading-relaxed mb-6">
+            Wszystko zaczęło się w Węgorzewie — małym mieście na Mazurach, gdzie sąsiedzi znają się z imienia, a dobre słowo znaczy więcej niż reklama. To właśnie tutaj, ponad dwie dekady temu, rodzina Bossów otworzyła swój pierwszy sklep. Kilka półek, kilku stałych klientów i jeden prosty cel: dać mieszkańcom to, czego potrzebują, blisko domu.
+          </p>
+          <p className="text-gray-600 text-lg leading-relaxed mb-6">
+            Z biegiem lat oferta rosła razem z zaufaniem klientów. Do asortymentu spożywczego dołączyły artykuły przemysłowe, a sklep stał się miejscem, do którego zagląda się nie tylko po zakupy — ale też po rozmowę. Wtedy właśnie narodził się pomysł na coś więcej.
+          </p>
+          <p className="text-gray-600 text-lg leading-relaxed">
+            Tak powstały <span className="font-bold text-yellow-600">Alkohole Świata Węgorzewo</span> — sklep dla tych, którzy szukają czegoś wyjątkowego. Whisky ze Szkocji, wina z Toskanii, ruma z Kuby. Mazury spotykają świat — i to właśnie w Węgorzewie.
+          </p>
+        </div>
       </section>
 
       {/* Dolny pasek kontaktowy */}
