@@ -1,103 +1,31 @@
 import { useState } from 'react'
 
 // ============================================================
-// USTAWIENIA STRONY KONTAKT — edytuj tylko tę sekcję
+// DANE SKLEPÓW — edytuj tutaj
 // ============================================================
 
-// ——— TREŚĆ ——————————————————————————————————————————————————
-
 const BOSS = {
-  telefon:   '87 000 00 00',              // numer telefonu
-  email:     'boss@wegorzewo.pl',         // adres e-mail
-  ulica:     'ul. Przykładowa 1',         // ulica i numer
-  kodMiasto: '11-600 Węgorzewo',          // kod i miasto
-  godziny:   'Pn–Pt: 8:00–18:00 | Sob: 9:00–14:00',  // godziny otwarcia
+  telefon:   '87 000 00 00',
+  email:     'boss@wegorzewo.pl',
+  ulica:     'ul. Przykładowa 1',
+  kodMiasto: '11-600 Węgorzewo',
+  godzinyTydz: 'Pn–Pt: 8:00–18:00',
+  godzinySob:  'Sobota: 9:00–14:00',
+  godzinyNied: 'Niedziela: zamknięte',
 }
 
 const ALKOHOLE = {
-  telefon:   '87 000 00 01',              // numer telefonu
-  email:     'alkohole@wegorzewo.pl',     // adres e-mail
-  ulica:     'ul. Przykładowa 2',         // ulica i numer
-  kodMiasto: '11-600 Węgorzewo',          // kod i miasto
-  godziny:   'Pn–Pt: 10:00–20:00 | Sob: 10:00–16:00', // godziny otwarcia
+  telefon:   '87 000 00 01',
+  email:     'alkohole@wegorzewo.pl',
+  ulica:     'ul. Przykładowa 2',
+  kodMiasto: '11-600 Węgorzewo',
+  godzinyTydz: 'Pn–Pt: 10:00–20:00',
+  godzinySob:  'Sobota: 10:00–16:00',
+  godzinyNied: 'Niedziela: zamknięte',
 }
 
-// ——— WYGLĄD NAGŁÓWKA STRONY —————————————————————————————
-
-// Rozmiar tytułu "Kontakt"
-// Opcje: 'text-2xl' | 'text-3xl' | 'text-4xl' (domyślne) | 'text-5xl' | 'text-6xl'
-const TYTUL_ROZMIAR = 'text-4xl'
-
-// Górny i dolny odstęp całej strony (padding)
-// Opcje: 'py-6' | 'py-8' | 'py-10' | 'py-12' (domyślny) | 'py-16' | 'py-20'
-const STRONA_PADDING = 'py-12'
-
-// ——— FORMULARZ KONTAKTOWY ————————————————————————————————
-
-// Kolor tła karty formularza
-// Opcje: 'bg-white' (biały, domyślny) | 'bg-gray-50' | 'bg-amber-50' | 'bg-yellow-50'
-const FORMULARZ_TLO = 'bg-white'
-
-// Zaokrąglenie karty formularza
-// Opcje: 'rounded-none' | 'rounded-lg' | 'rounded-xl' | 'rounded-2xl' (domyślne) | 'rounded-3xl'
-const FORMULARZ_ZAOKRAGLENIE = 'rounded-2xl'
-
-// Cień karty formularza
-// Opcje: 'shadow-none' | 'shadow-sm' | 'shadow-md' (domyślny) | 'shadow-lg' | 'shadow-xl'
-const FORMULARZ_CIEN = 'shadow-md'
-
-// Kolor podświetlenia pól formularza (gdy klikniesz na pole)
-// Opcje: 'focus:ring-yellow-400' (żółty, domyślny) | 'focus:ring-amber-400' | 'focus:ring-blue-400' | 'focus:ring-green-400' | 'focus:ring-gray-400'
-const FORMULARZ_KOLOR_FOKUS = 'focus:ring-yellow-400'
-
-// Kolor przycisku "Wyślij wiadomość"
-// Opcje: 'bg-yellow-400' (żółty, domyślny) | 'bg-amber-400' | 'bg-gray-800' | 'bg-blue-600' | 'bg-green-600'
-const PRZYCISK_KOLOR = 'bg-yellow-400'
-
-// Kolor tekstu na przycisku
-// Opcje: 'text-gray-900' (ciemny, domyślny) | 'text-black' | 'text-white'
-const PRZYCISK_TEKST = 'text-gray-900'
-
-// Zaokrąglenie przycisku
-// Opcje: 'rounded-none' | 'rounded-lg' | 'rounded-xl' | 'rounded-full' (pigułka, domyślne)
-const PRZYCISK_ZAOKRAGLENIE = 'rounded-lg'
-
-// ——— KARTY Z ADRESAMI ————————————————————————————————————
-
-// Kolor tła karty BOSS
-// Opcje: 'bg-gray-800' (ciemny szary, domyślny) | 'bg-gray-900' | 'bg-black' | 'bg-blue-900' | 'bg-slate-800'
-const BOSS_KARTA_TLO = 'bg-gray-800'
-
-// Kolor tytułu karty BOSS
-// Opcje: 'text-yellow-400' (żółty, domyślny) | 'text-amber-300' | 'text-white' | 'text-green-400'
-const BOSS_TYTUL_KOLOR = 'text-yellow-400'
-
-// Kolor tekstu szczegółów BOSS (adres, telefon itp.)
-// Opcje: 'text-gray-300' (jasny szary, domyślny) | 'text-gray-200' | 'text-white' | 'text-gray-400'
-const BOSS_TEKST_KOLOR = 'text-gray-300'
-
-// Kolor tła karty ALKOHOLE ŚWIATA
-// Opcje: 'bg-amber-800' (brązowy, domyślny) | 'bg-amber-900' | 'bg-orange-900' | 'bg-red-900' | 'bg-purple-900'
-const ALKOHOLE_KARTA_TLO = 'bg-amber-800'
-
-// Kolor tytułu karty ALKOHOLE ŚWIATA
-// Opcje: 'text-yellow-400' (żółty, domyślny) | 'text-amber-300' | 'text-white' | 'text-orange-300'
-const ALKOHOLE_TYTUL_KOLOR = 'text-yellow-400'
-
-// Kolor tekstu szczegółów ALKOHOLE ŚWIATA
-// Opcje: 'text-amber-200' (jasny brązowy, domyślny) | 'text-amber-100' | 'text-white' | 'text-gray-200'
-const ALKOHOLE_TEKST_KOLOR = 'text-amber-200'
-
-// ——— UKŁAD STRONY ————————————————————————————————————————
-
-// Układ głównej sekcji (formularz + karty adresowe)
-// Opcje:
-//   'grid md:grid-cols-2 gap-10'   ← 2 kolumny obok siebie (domyślne)
-//   'flex flex-col gap-8'          ← jedna pod drugą (wszystko w jednej kolumnie)
-const UKLAD = 'grid md:grid-cols-2 gap-10'
-
 // ============================================================
-// KOD STRONY — nie musisz tu nic zmieniać
+// KOD STRONY
 // ============================================================
 
 export default function Kontakt() {
@@ -114,73 +42,168 @@ export default function Kontakt() {
   }
 
   return (
-    <main className={`max-w-4xl mx-auto px-4 ${STRONA_PADDING}`}>
-      <h1 className={`${TYTUL_ROZMIAR} font-bold text-gray-800 mb-2 text-center`}>Kontakt</h1>
-      <p className="text-gray-500 text-center mb-10">Napisz do nas lub odwiedź sklep w Węgorzewie</p>
+    <main>
 
-      <div className={UKLAD}>
+      {/* Nagłówek — ciepłe powitanie */}
+      <section style={{ background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%)', padding: '64px 32px', textAlign: 'center' }}>
+        <div style={{ fontSize: '56px', marginBottom: '16px' }}>👋</div>
+        <h1 style={{ fontSize: '42px', fontWeight: '900', color: '#fbbf24', marginBottom: '16px', lineHeight: '1.2' }}>
+          Chętnie porozmawiamy!
+        </h1>
+        <p style={{ fontSize: '18px', color: '#cbd5e1', maxWidth: '520px', margin: '0 auto', lineHeight: '1.6' }}>
+          Masz pytanie, zamówienie albo po prostu chcesz się przywitać?<br/>
+          Jesteśmy tu dla Ciebie — w sklepie, przez telefon lub e-mail.
+        </p>
+      </section>
 
-        {/* Formularz */}
-        <div className={`${FORMULARZ_TLO} ${FORMULARZ_ZAOKRAGLENIE} ${FORMULARZ_CIEN} p-8 border border-gray-100`}>
-          <h2 className="text-xl font-bold text-gray-700 mb-6">Napisz wiadomość</h2>
+      {/* Trzy szybkie sposoby kontaktu */}
+      <section style={{ background: '#f8fafc', padding: '48px 32px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px', maxWidth: '900px', margin: '0 auto' }}>
+
+          <div style={{ background: 'white', borderRadius: '20px', padding: '32px 24px', textAlign: 'center', boxShadow: '0 4px 20px rgba(0,0,0,0.08)', border: '2px solid #fef3c7' }}>
+            <div style={{ fontSize: '40px', marginBottom: '12px' }}>📞</div>
+            <h3 style={{ fontWeight: '700', color: '#1f2937', fontSize: '17px', marginBottom: '8px' }}>Zadzwoń</h3>
+            <p style={{ color: '#6b7280', fontSize: '13px', marginBottom: '12px' }}>Odbieramy od pon. do sob.</p>
+            <a href={`tel:${BOSS.telefon.replace(/\s/g,'')}`} style={{ display: 'block', color: '#d97706', fontWeight: '800', fontSize: '18px', textDecoration: 'none', marginBottom: '4px' }}>{BOSS.telefon}</a>
+            <a href={`tel:${ALKOHOLE.telefon.replace(/\s/g,'')}`} style={{ display: 'block', color: '#b45309', fontWeight: '800', fontSize: '18px', textDecoration: 'none' }}>{ALKOHOLE.telefon}</a>
+          </div>
+
+          <div style={{ background: 'white', borderRadius: '20px', padding: '32px 24px', textAlign: 'center', boxShadow: '0 4px 20px rgba(0,0,0,0.08)', border: '2px solid #fef3c7' }}>
+            <div style={{ fontSize: '40px', marginBottom: '12px' }}>✉️</div>
+            <h3 style={{ fontWeight: '700', color: '#1f2937', fontSize: '17px', marginBottom: '8px' }}>Napisz e-mail</h3>
+            <p style={{ color: '#6b7280', fontSize: '13px', marginBottom: '12px' }}>Odpowiadamy w ciągu doby.</p>
+            <a href={`mailto:${BOSS.email}`} style={{ display: 'block', color: '#d97706', fontWeight: '700', fontSize: '14px', textDecoration: 'none', marginBottom: '4px' }}>{BOSS.email}</a>
+            <a href={`mailto:${ALKOHOLE.email}`} style={{ display: 'block', color: '#b45309', fontWeight: '700', fontSize: '14px', textDecoration: 'none' }}>{ALKOHOLE.email}</a>
+          </div>
+
+          <div style={{ background: 'white', borderRadius: '20px', padding: '32px 24px', textAlign: 'center', boxShadow: '0 4px 20px rgba(0,0,0,0.08)', border: '2px solid #fef3c7' }}>
+            <div style={{ fontSize: '40px', marginBottom: '12px' }}>📍</div>
+            <h3 style={{ fontWeight: '700', color: '#1f2937', fontSize: '17px', marginBottom: '8px' }}>Odwiedź nas</h3>
+            <p style={{ color: '#6b7280', fontSize: '13px', marginBottom: '12px' }}>Znajdziesz nas w centrum Węgorzewa.</p>
+            <p style={{ color: '#d97706', fontWeight: '700', fontSize: '14px', marginBottom: '4px' }}>{BOSS.ulica}</p>
+            <p style={{ color: '#b45309', fontWeight: '700', fontSize: '14px' }}>{ALKOHOLE.ulica}</p>
+          </div>
+
+        </div>
+      </section>
+
+      {/* Karty sklepów */}
+      <section style={{ background: 'white', padding: '48px 32px' }}>
+        <h2 style={{ textAlign: 'center', fontSize: '28px', fontWeight: '800', color: '#1f2937', marginBottom: '40px' }}>Nasze sklepy</h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '32px', maxWidth: '900px', margin: '0 auto' }}>
+
+          {/* BOSS */}
+          <div style={{ borderRadius: '24px', overflow: 'hidden', boxShadow: '0 8px 30px rgba(0,0,0,0.12)' }}>
+            <div style={{ background: '#1f2937', padding: '24px 28px' }}>
+              <div style={{ fontSize: '32px', marginBottom: '8px' }}>🛒</div>
+              <h3 style={{ color: '#fbbf24', fontWeight: '900', fontSize: '20px', margin: '0' }}>BOSS Węgorzewo</h3>
+              <p style={{ color: '#9ca3af', fontSize: '13px', marginTop: '4px' }}>Artykuły spożywcze i przemysłowe</p>
+            </div>
+            <div style={{ background: '#f9fafb', padding: '24px 28px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <span style={{ fontSize: '18px' }}>📍</span>
+                  <span style={{ color: '#374151', fontSize: '15px' }}>{BOSS.ulica}, {BOSS.kodMiasto}</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <span style={{ fontSize: '18px' }}>📞</span>
+                  <a href={`tel:${BOSS.telefon.replace(/\s/g,'')}`} style={{ color: '#d97706', fontWeight: '700', fontSize: '16px', textDecoration: 'none' }}>{BOSS.telefon}</a>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <span style={{ fontSize: '18px' }}>✉️</span>
+                  <a href={`mailto:${BOSS.email}`} style={{ color: '#6b7280', fontSize: '14px', textDecoration: 'none' }}>{BOSS.email}</a>
+                </div>
+                <div style={{ marginTop: '8px', background: '#fef3c7', borderRadius: '12px', padding: '12px 16px' }}>
+                  <p style={{ fontWeight: '700', color: '#92400e', fontSize: '13px', margin: '0 0 4px 0' }}>🕐 Godziny otwarcia</p>
+                  <p style={{ color: '#78350f', fontSize: '13px', margin: '0 0 2px 0' }}>{BOSS.godzinyTydz}</p>
+                  <p style={{ color: '#78350f', fontSize: '13px', margin: '0 0 2px 0' }}>{BOSS.godzinySob}</p>
+                  <p style={{ color: '#a8a29e', fontSize: '13px', margin: '0' }}>{BOSS.godzinyNied}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ALKOHOLE */}
+          <div style={{ borderRadius: '24px', overflow: 'hidden', boxShadow: '0 8px 30px rgba(0,0,0,0.12)' }}>
+            <div style={{ background: '#7c2d12', padding: '24px 28px' }}>
+              <div style={{ fontSize: '32px', marginBottom: '8px' }}>🍷</div>
+              <h3 style={{ color: '#fbbf24', fontWeight: '900', fontSize: '20px', margin: '0' }}>Alkohole Świata</h3>
+              <p style={{ color: '#fca5a5', fontSize: '13px', marginTop: '4px' }}>Specjalistyczny sklep z alkoholami</p>
+            </div>
+            <div style={{ background: '#f9fafb', padding: '24px 28px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <span style={{ fontSize: '18px' }}>📍</span>
+                  <span style={{ color: '#374151', fontSize: '15px' }}>{ALKOHOLE.ulica}, {ALKOHOLE.kodMiasto}</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <span style={{ fontSize: '18px' }}>📞</span>
+                  <a href={`tel:${ALKOHOLE.telefon.replace(/\s/g,'')}`} style={{ color: '#b45309', fontWeight: '700', fontSize: '16px', textDecoration: 'none' }}>{ALKOHOLE.telefon}</a>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <span style={{ fontSize: '18px' }}>✉️</span>
+                  <a href={`mailto:${ALKOHOLE.email}`} style={{ color: '#6b7280', fontSize: '14px', textDecoration: 'none' }}>{ALKOHOLE.email}</a>
+                </div>
+                <div style={{ marginTop: '8px', background: '#fef3c7', borderRadius: '12px', padding: '12px 16px' }}>
+                  <p style={{ fontWeight: '700', color: '#92400e', fontSize: '13px', margin: '0 0 4px 0' }}>🕐 Godziny otwarcia</p>
+                  <p style={{ color: '#78350f', fontSize: '13px', margin: '0 0 2px 0' }}>{ALKOHOLE.godzinyTydz}</p>
+                  <p style={{ color: '#78350f', fontSize: '13px', margin: '0 0 2px 0' }}>{ALKOHOLE.godzinySob}</p>
+                  <p style={{ color: '#a8a29e', fontSize: '13px', margin: '0' }}>{ALKOHOLE.godzinyNied}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* Formularz kontaktowy */}
+      <section style={{ background: '#f1f5f9', padding: '48px 32px' }}>
+        <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+          <h2 style={{ textAlign: 'center', fontSize: '28px', fontWeight: '800', color: '#1f2937', marginBottom: '8px' }}>Wyślij wiadomość</h2>
+          <p style={{ textAlign: 'center', color: '#6b7280', fontSize: '15px', marginBottom: '32px' }}>Masz pytanie? Napisz — odpowiemy tak szybko jak to możliwe.</p>
+
           {wyslany ? (
-            <div className="bg-green-100 text-green-800 rounded-xl p-6 text-center">
-              <div className="text-4xl mb-3">✅</div>
-              <p className="font-semibold">Dziękujemy za wiadomość!</p>
-              <p className="text-sm mt-1">Odezwiemy się wkrótce.</p>
+            <div style={{ background: 'white', borderRadius: '24px', padding: '48px 32px', textAlign: 'center', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
+              <div style={{ fontSize: '56px', marginBottom: '16px' }}>🎉</div>
+              <h3 style={{ fontSize: '22px', fontWeight: '800', color: '#1f2937', marginBottom: '8px' }}>Dziękujemy!</h3>
+              <p style={{ color: '#6b7280', fontSize: '15px' }}>Twoja wiadomość dotarła. Odezwiemy się wkrótce!</p>
             </div>
           ) : (
-            <form onSubmit={wyslij} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Imię i nazwisko</label>
+            <form onSubmit={wyslij} style={{ background: 'white', borderRadius: '24px', padding: '40px 36px', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
+              <div style={{ marginBottom: '20px' }}>
+                <label style={{ display: 'block', fontWeight: '600', color: '#374151', fontSize: '14px', marginBottom: '6px' }}>Imię i nazwisko</label>
                 <input type="text" name="imie" required value={formularz.imie} onChange={zmienPole}
-                  className={`w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 ${FORMULARZ_KOLOR_FOKUS}`}
-                  placeholder="Jan Kowalski" />
+                  placeholder="Jan Kowalski"
+                  style={{ width: '100%', border: '2px solid #e5e7eb', borderRadius: '12px', padding: '12px 16px', fontSize: '15px', outline: 'none', boxSizing: 'border-box', transition: 'border-color 0.2s' }}
+                  onFocus={e => e.target.style.borderColor='#fbbf24'}
+                  onBlur={e => e.target.style.borderColor='#e5e7eb'} />
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Adres e-mail</label>
+              <div style={{ marginBottom: '20px' }}>
+                <label style={{ display: 'block', fontWeight: '600', color: '#374151', fontSize: '14px', marginBottom: '6px' }}>Adres e-mail</label>
                 <input type="email" name="email" required value={formularz.email} onChange={zmienPole}
-                  className={`w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 ${FORMULARZ_KOLOR_FOKUS}`}
-                  placeholder="jan@przykład.pl" />
+                  placeholder="jan@przykład.pl"
+                  style={{ width: '100%', border: '2px solid #e5e7eb', borderRadius: '12px', padding: '12px 16px', fontSize: '15px', outline: 'none', boxSizing: 'border-box', transition: 'border-color 0.2s' }}
+                  onFocus={e => e.target.style.borderColor='#fbbf24'}
+                  onBlur={e => e.target.style.borderColor='#e5e7eb'} />
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Wiadomość</label>
-                <textarea name="wiadomosc" required rows={4} value={formularz.wiadomosc} onChange={zmienPole}
-                  className={`w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 ${FORMULARZ_KOLOR_FOKUS} resize-none`}
-                  placeholder="W czym możemy pomóc?" />
+              <div style={{ marginBottom: '28px' }}>
+                <label style={{ display: 'block', fontWeight: '600', color: '#374151', fontSize: '14px', marginBottom: '6px' }}>Wiadomość</label>
+                <textarea name="wiadomosc" required rows={5} value={formularz.wiadomosc} onChange={zmienPole}
+                  placeholder="W czym możemy Ci pomóc?"
+                  style={{ width: '100%', border: '2px solid #e5e7eb', borderRadius: '12px', padding: '12px 16px', fontSize: '15px', outline: 'none', boxSizing: 'border-box', resize: 'none', transition: 'border-color 0.2s' }}
+                  onFocus={e => e.target.style.borderColor='#fbbf24'}
+                  onBlur={e => e.target.style.borderColor='#e5e7eb'} />
               </div>
-              <button type="submit" className={`w-full ${PRZYCISK_KOLOR} ${PRZYCISK_TEKST} ${PRZYCISK_ZAOKRAGLENIE} py-3 font-bold hover:opacity-90 transition-opacity`}>
-                Wyślij wiadomość
+              <button type="submit"
+                style={{ width: '100%', background: '#fbbf24', color: '#1f2937', fontWeight: '800', fontSize: '16px', padding: '14px', borderRadius: '14px', border: 'none', cursor: 'pointer' }}>
+                Wyślij wiadomość →
               </button>
             </form>
           )}
         </div>
+      </section>
 
-        {/* Karty adresowe */}
-        <div className="space-y-6">
-          <div className={`${BOSS_KARTA_TLO} text-white rounded-2xl p-6`}>
-            <h3 className={`${BOSS_TYTUL_KOLOR} font-bold text-lg mb-4`}>🛒 BOSS Węgorzewo</h3>
-            <p className={BOSS_TEKST_KOLOR}>📍 {BOSS.ulica}, {BOSS.kodMiasto}</p>
-            <p className={`mt-1 ${BOSS_TEKST_KOLOR}`}>📞 {BOSS.telefon}</p>
-            <p className={`mt-1 ${BOSS_TEKST_KOLOR}`}>📧 {BOSS.email}</p>
-            <p className={`mt-3 text-sm ${BOSS_TEKST_KOLOR}`}>{BOSS.godziny}</p>
-          </div>
-
-          <div className={`${ALKOHOLE_KARTA_TLO} text-white rounded-2xl p-6`}>
-            <h3 className={`${ALKOHOLE_TYTUL_KOLOR} font-bold text-lg mb-4`}>🍷 Alkohole Świata Węgorzewo</h3>
-            <p className={ALKOHOLE_TEKST_KOLOR}>📍 {ALKOHOLE.ulica}, {ALKOHOLE.kodMiasto}</p>
-            <p className={`mt-1 ${ALKOHOLE_TEKST_KOLOR}`}>📞 {ALKOHOLE.telefon}</p>
-            <p className={`mt-1 ${ALKOHOLE_TEKST_KOLOR}`}>📧 {ALKOHOLE.email}</p>
-            <p className={`mt-3 text-sm ${ALKOHOLE_TEKST_KOLOR}`}>{ALKOHOLE.godziny}</p>
-          </div>
-
-          <div className="bg-gray-100 rounded-2xl p-6 text-center text-gray-500">
-            <div className="text-4xl mb-2">🗺️</div>
-            <p className="font-semibold">Węgorzewo, Polska</p>
-            <p className="text-sm mt-1">Mapa Google zostanie dodana wkrótce</p>
-          </div>
-        </div>
-      </div>
     </main>
   )
 }
