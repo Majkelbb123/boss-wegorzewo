@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import bossZdjecie from '../assets/boass zdjecie.jpg'
-import alkoholeZdjecie from '../assets/alkohole zdjecie remake.png'
+import alkoholeZdjecie from '../assets/alkohole zdjecie.jpg'
 
 // ============================================================
 // USTAWIENIA STRONY GŁÓWNEJ — edytuj tylko tę sekcję
