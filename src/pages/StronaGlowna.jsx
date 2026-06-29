@@ -234,6 +234,10 @@ export default function StronaGlowna() {
         </div>
       </section>
 
+      {/* Pusta sekcja — miejsce na przyszłą zawartość */}
+      <section className="bg-white w-full h-screen">
+      </section>
+
       {/* Dolny pasek kontaktowy */}
       <section className="bg-gray-900 py-10 px-4 text-center border-t border-gray-700">
         <p className="text-gray-400 mb-4">Znajdź nas w Węgorzewie — jesteśmy tu dla Ciebie</p>
