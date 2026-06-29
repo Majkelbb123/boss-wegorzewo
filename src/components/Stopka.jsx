@@ -69,7 +69,7 @@ const ROZMIAR_TEKSTU = 'text-base'
 export default function Stopka() {
   return (
     <footer className={`${TLO} ${KOLOR_TEKSTU} mt-auto ${PADDING}`}>
-      <div className={`max-w-6xl mx-auto px-4 ${UKLAD_KOLUMN} ${ODSTEP_KOLUMN} text-center md:text-left`}>
+      <div className={`max-w-6xl mx-auto px-4 ${UKLAD_KOLUMN} ${ODSTEP_KOLUMN} text-center`}>
 
         <div>
           <h3 className={`${KOLOR_TYTULOW} font-bold ${ROZMIAR_TYTULOW} mb-2`}>BOSS Węgorzewo</h3>
