@@ -142,30 +142,33 @@ const PRZYCISK_ZAOKRAGLENIE = 'rounded-full'
 
 export default function AlkoholeStrona() {
   return (
-    <main className="max-w-6xl mx-auto px-4 py-12">
+    <main className="w-full px-8" style={{ paddingTop: '60px', paddingBottom: '60px' }}>
 
-      <div className={`text-center ${NAGLOWEK_ODSTEP}`}>
-        <div className={`${IKONA_ROZMIAR} mb-4`}>{INFORMACJE.ikona}</div>
-        <h1 className={`${TYTUL_ROZMIAR} font-bold text-gray-800 mb-4`}>{INFORMACJE.nazwa}</h1>
-        <p className={`text-gray-600 ${OPIS_ROZMIAR} max-w-2xl mx-auto`}>{INFORMACJE.opis}</p>
+      {/* Nagłówek strony */}
+      <div className="text-center" style={{ marginBottom: '60px' }}>
+        <div className={`${IKONA_ROZMIAR}`} style={{ marginBottom: '16px' }}>{INFORMACJE.ikona}</div>
+        <h1 className={`${TYTUL_ROZMIAR} font-bold text-gray-800`} style={{ marginBottom: '16px' }}>{INFORMACJE.nazwa}</h1>
+        <p className={`text-gray-600 ${OPIS_ROZMIAR} max-w-2xl mx-auto text-center`}>{INFORMACJE.opis}</p>
       </div>
 
-      <section className="mb-12">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Co znajdziesz w naszym sklepie</h2>
+      {/* Sekcja z kartami kategorii */}
+      <section style={{ marginBottom: '60px' }}>
+        <h2 className="text-2xl font-bold text-gray-800 text-center" style={{ marginBottom: '36px' }}>Co znajdziesz w naszym sklepie</h2>
         <div className={`${SIATKA_KOLUMNY} ${SIATKA_ODSTEP}`}>
           {KATEGORIE.map(kat => (
             <div key={kat.nazwa} className={`${KARTA_TLO} ${KARTA_ZAOKRAGLENIE} ${KARTA_CIEN} ${KARTA_PADDING} text-center hover:shadow-lg transition-shadow border ${KARTA_OBRAMOWANIE}`}>
-              <div className={`${KARTA_IKONA_ROZMIAR} mb-3`}>{kat.ikona}</div>
-              <h3 className={`font-bold text-gray-800 mb-1 ${KARTA_NAZWA_ROZMIAR}`}>{kat.nazwa}</h3>
+              <div className={`${KARTA_IKONA_ROZMIAR}`} style={{ marginBottom: '12px' }}>{kat.ikona}</div>
+              <h3 className={`font-bold text-gray-800 ${KARTA_NAZWA_ROZMIAR}`} style={{ marginBottom: '4px' }}>{kat.nazwa}</h3>
               <p className={`text-gray-500 ${KARTA_OPIS_ROZMIAR}`}>{kat.opis}</p>
             </div>
           ))}
         </div>
       </section>
 
+      {/* Baner 18+ */}
       {POKAZ_BANER_18 && (
-        <section className={`${BANER_TLO} rounded-2xl p-8 mb-8 text-center`}>
-          <h2 className={`text-xl font-bold ${BANER_TYTUL} mb-2`}>🔞 Tylko dla dorosłych</h2>
+        <section className={`${BANER_TLO} rounded-2xl text-center`} style={{ padding: '32px', marginBottom: '48px' }}>
+          <h2 className={`text-xl font-bold ${BANER_TYTUL}`} style={{ marginBottom: '8px' }}>🔞 Tylko dla dorosłych</h2>
           <p className={BANER_TEKST}>
             Sprzedaż alkoholu jest dozwolona wyłącznie osobom pełnoletnim (18+).
             Alkohol spożywany w nadmiarze szkodzi zdrowiu.
@@ -173,26 +176,27 @@ export default function AlkoholeStrona() {
         </section>
       )}
 
-      <section className={`${KONTAKT_TLO} text-white rounded-2xl p-8 text-center`}>
-        <h2 className={`text-2xl font-bold ${KONTAKT_TYTUL_KOLOR} mb-4`}>Odwiedź nas</h2>
+      {/* Sekcja kontaktowa */}
+      <section className={`${KONTAKT_TLO} text-white rounded-2xl text-center`} style={{ padding: '48px' }}>
+        <h2 className={`text-2xl font-bold ${KONTAKT_TYTUL_KOLOR}`} style={{ marginBottom: '32px' }}>Odwiedź nas</h2>
         <div className="grid md:grid-cols-3 gap-6">
           <div>
-            <div className="text-3xl mb-2">📍</div>
+            <div className="text-3xl" style={{ marginBottom: '8px' }}>📍</div>
             <p className="font-semibold">Adres</p>
             <p className={KONTAKT_TEKST_KOLOR}>{ADRES.ulica}<br/>{ADRES.kodMiasto}</p>
           </div>
           <div>
-            <div className="text-3xl mb-2">📞</div>
+            <div className="text-3xl" style={{ marginBottom: '8px' }}>📞</div>
             <p className="font-semibold">Telefon</p>
             <p className={KONTAKT_TEKST_KOLOR}>{ADRES.telefon}</p>
           </div>
           <div>
-            <div className="text-3xl mb-2">🕐</div>
+            <div className="text-3xl" style={{ marginBottom: '8px' }}>🕐</div>
             <p className="font-semibold">Godziny</p>
             <p className={KONTAKT_TEKST_KOLOR}>{ADRES.godzinaOtwarcia}<br/>{ADRES.godzinaSobota}</p>
           </div>
         </div>
-        <Link to="/kontakt" className={`inline-block mt-6 ${PRZYCISK_KOLOR} ${PRZYCISK_TEKST} ${PRZYCISK_ZAOKRAGLENIE} px-6 py-2 font-bold hover:opacity-90 transition-opacity`}>
+        <Link to="/kontakt" className={`inline-block ${PRZYCISK_KOLOR} ${PRZYCISK_TEKST} ${PRZYCISK_ZAOKRAGLENIE} px-6 py-2 font-bold hover:opacity-90 transition-opacity`} style={{ marginTop: '32px' }}>
           Napisz do nas
         </Link>
       </section>
