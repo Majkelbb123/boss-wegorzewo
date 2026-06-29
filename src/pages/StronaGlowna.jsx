@@ -1,116 +1,91 @@
 import { Link } from 'react-router-dom'
+import bossZdjecie from '../assets/boass zdjecie.jpg'
+import alkoholeZdjecie from '../assets/alkohole zdjecie.jpg'
 
 // ============================================================
 // USTAWIENIA STRONY GŁÓWNEJ — edytuj tylko tę sekcję
 // ============================================================
 
-// ——— TREŚĆ (teksty i emotki) ——————————————————————————————
+// ——— TREŚĆ ——————————————————————————————————————————————————
 
 const BOSS = {
-  ikona:   '🛒',                               // emotka wyświetlana w logo i panelu
-  nazwa:   'BOSS',                             // nazwa firmy
-  miasto:  'Węgorzewo',                        // miasto wyświetlane pod nazwą
-  opis:    'Artykuły spożywcze i przemysłowe', // opis widoczny po najechaniu na panel
+  nazwa:   'BOSS',                              // nazwa firmy (widoczna na panelu)
+  miasto:  'Węgorzewo',                         // miasto
+  opis:    'Sklep wielobranżowy z artykułami spożywczymi, nabiałem, wędlinami oraz artykułami przemysłowymi. Obsługujemy klientów indywidualnych i firmy.',
+  przycisk: 'Poznaj ofertę →',                  // tekst przycisku
 }
 
 const ALKOHOLE = {
-  ikona:   '🍷',                               // emotka wyświetlana w logo i panelu
-  nazwa1:  'ALKOHOLE',                         // pierwsza linia nazwy (wyświetlana osobno)
-  nazwa2:  'ŚWIATA',                           // druga linia nazwy
-  miasto:  'Węgorzewo',                        // miasto wyświetlane pod nazwą
-  opis:    'Wina, whisky i trunki z całego świata', // opis widoczny po najechaniu
+  miasto:  'Węgorzewo',                         // miasto
+  opis:    'Specjalistyczny sklep z alkoholami z całego świata — wina, whisky, giny, ruma i wiele innych trunków od sprawdzonych producentów.',
+  przycisk: 'Poznaj ofertę →',                  // tekst przycisku
 }
+
+// ——— WYGLĄD SUWAKA ———————————————————————————————————————
+
+// Wysokość suwaka (vh = procent wysokości ekranu)
+// Opcje: 'h-[30vh]' | 'h-[40vh]' | 'h-[50vh]' | 'h-[60vh]' (domyślna) | 'h-[70vh]' | 'h-[80vh]'
+const SUWAK_WYSOKOSC = 'h-[60vh]'
+
+// Szybkość animacji wysuwania paneli
+// Opcje: 'duration-300' (szybka) | 'duration-500' (normalna) | 'duration-700' (wolna)
+const SUWAK_ANIMACJA = 'duration-500'
+
+// Powiększenie zdjęcia przy najechaniu (1.0 = brak, 1.1 = 10%, 1.15 = 15%)
+// W kodzie poniżej zmień "scale-110" na "scale-105" (mniej) lub "scale-125" (więcej)
 
 // ——— GÓRNY PASEK Z LOGO ———————————————————————————————————
 
 // Kolor tła górnego paska
-// Opcje: 'bg-gray-900' | 'bg-gray-800' | 'bg-black' | 'bg-white' | 'bg-amber-900' | 'bg-blue-900' | 'bg-slate-900'
+// Opcje: 'bg-gray-900' (domyślny) | 'bg-gray-800' | 'bg-black' | 'bg-white'
 const LOGO_TLO = 'bg-gray-900'
 
-// Odstęp (przerwa) między logiem BOSS a logiem ALKOHOLE ŚWIATA
-// Opcje: 'gap-4' (mały) | 'gap-8' | 'gap-12' | 'gap-16' (domyślny) | 'gap-24' | 'gap-32' (bardzo duży)
+// Górny i dolny odstęp górnego paska
+// Opcje: 'py-6' | 'py-8' | 'py-10' (domyślny) | 'py-14'
+const LOGO_PADDING = 'py-10'
+
+// Odstęp między logami
+// Opcje: 'gap-8' | 'gap-12' | 'gap-16' (domyślny) | 'gap-24'
 const LOGO_ODSTEP = 'gap-16'
 
-// Rozmiar ikony/emotki w górnym pasku
-// Opcje: 'text-3xl' (małe) | 'text-4xl' | 'text-5xl' (domyślne) | 'text-6xl' | 'text-7xl' (ogromne)
+// Rozmiar ikony w górnym pasku
+// Opcje: 'text-4xl' | 'text-5xl' (domyślne) | 'text-6xl' | 'text-7xl'
 const LOGO_IKONA_ROZMIAR = 'text-5xl'
 
 // Rozmiar nazwy BOSS w górnym pasku
-// Opcje: 'text-2xl' | 'text-3xl' | 'text-4xl' (domyślne) | 'text-5xl' | 'text-6xl'
+// Opcje: 'text-3xl' | 'text-4xl' (domyślne) | 'text-5xl'
 const LOGO_BOSS_ROZMIAR = 'text-4xl'
 
-// Rozmiar nazwy ALKOHOLE ŚWIATA w górnym pasku (każda linia osobno)
-// Opcje: 'text-xl' | 'text-2xl' (domyślne) | 'text-3xl' | 'text-4xl'
+// Rozmiar nazwy ALKOHOLE ŚWIATA w górnym pasku
+// Opcje: 'text-xl' | 'text-2xl' (domyślne) | 'text-3xl'
 const LOGO_ALKOHOLE_ROZMIAR = 'text-2xl'
 
-// Górny i dolny odstęp (padding) górnego paska
-// Opcje: 'py-4' (mały) | 'py-6' | 'py-8' | 'py-10' (domyślny) | 'py-14' | 'py-20' (duży)
-const LOGO_PADDING = 'py-10'
+// ——— SEKCJA OPISÓW (pod suwakiem) ————————————————————————
 
-// ——— PANELE SUWAKA ————————————————————————————————————————
+// Kolor tła sekcji opisów
+// Opcje: 'bg-white' (domyślny) | 'bg-gray-50' | 'bg-gray-100'
+const OPISY_TLO = 'bg-white'
 
-// Wysokość paneli suwaka (vh = procent wysokości ekranu)
-// Opcje: 'h-[25vh]' (niska) | 'h-[35vh]' | 'h-[42vh]' | 'h-[60vh]' | 'h-[80vh]' | 'h-[90vh]' (prawie cały ekran)
-const SUWAK_WYSOKOSC = 'h-[80vh]'
+// Górny i dolny odstęp sekcji
+// Opcje: 'py-12' | 'py-16' (domyślny) | 'py-20' | 'py-24'
+const OPISY_PADDING = 'py-16'
 
-// Maksymalna szerokość suwaka (na szerokich ekranach)
-// Opcje: 'max-w-2xl' (wąski) | 'max-w-3xl' | 'max-w-4xl' | 'max-w-5xl' | 'max-w-6xl' | 'max-w-full' (cała szerokość ekranu)
-const SUWAK_SZEROKOSC = 'max-w-full'
+// Tytuł sekcji opisów
+const OPISY_TYTUL = 'Nasze sklepy w Węgorzewie'
 
-// Zaokrąglenie rogów suwaka
-// Opcje: 'rounded-none' (ostre rogi) | 'rounded-lg' | 'rounded-xl' | 'rounded-2xl' | 'rounded-3xl' (bardzo okrągłe)
-// Uwaga: przy pełnej szerokości (max-w-full) wygląda lepiej bez zaokrąglenia ('rounded-none')
-const SUWAK_ZAOKRAGLENIE = 'rounded-none'
+// Opis BOSS w sekcji
+const OPIS_BOSS = {
+  tytul:   'BOSS Węgorzewo',
+  tekst:   'Sklep wielobranżowy z bogatą ofertą artykułów spożywczych, nabiału, wędlin oraz artykułów przemysłowych. Obsługujemy zarówno klientów indywidualnych, jak i firmy w ramach handlu hurtowego.',
+  godziny: 'Pn–Pt: 8:00–18:00 | Sob: 9:00–14:00',
+}
 
-// Szybkość animacji wysuwania paneli
-// Opcje: 'duration-150' (błyskawiczna) | 'duration-300' (szybka) | 'duration-500' (normalna) | 'duration-700' (wolna) | 'duration-1000' (bardzo wolna)
-const SUWAK_ANIMACJA = 'duration-500'
-
-// Rozmiar ikony/emotki wewnątrz paneli suwaka
-// Opcje: 'text-4xl' | 'text-5xl' | 'text-6xl' (domyślne) | 'text-7xl' | 'text-8xl' (ogromne)
-const SUWAK_IKONA_ROZMIAR = 'text-6xl'
-
-// Rozmiar nazwy BOSS wewnątrz panelu
-// Opcje: 'text-2xl' | 'text-3xl' | 'text-4xl' (domyślne) | 'text-5xl' | 'text-6xl'
-const SUWAK_BOSS_ROZMIAR = 'text-4xl'
-
-// Rozmiar nazwy ALKOHOLE ŚWIATA wewnątrz panelu (obie linie)
-// Opcje: 'text-2xl' | 'text-3xl' (domyślne) | 'text-4xl' | 'text-5xl'
-const SUWAK_ALKOHOLE_ROZMIAR = 'text-3xl'
-
-// Kolor gradientu tła panelu BOSS
-// Opcje (skopiuj i wklej cały napis):
-//   'bg-gradient-to-br from-gray-700 to-gray-900'     ← ciemny szary (domyślny)
-//   'bg-gradient-to-br from-blue-800 to-blue-950'     ← granatowy
-//   'bg-gradient-to-br from-green-800 to-green-950'   ← ciemnozielony
-//   'bg-gradient-to-br from-slate-700 to-slate-900'   ← stalowy
-//   'bg-gradient-to-br from-zinc-700 to-zinc-900'     ← cynkowy szary
-//   'bg-gradient-to-r from-gray-600 to-gray-900'      ← szary poziomy
-const BOSS_GRADIENT = 'bg-gradient-to-br from-gray-700 to-gray-900'
-
-// Kolor gradientu tła panelu ALKOHOLE ŚWIATA
-// Opcje (skopiuj i wklej cały napis):
-//   'bg-gradient-to-br from-amber-800 to-amber-950'   ← brązowy (domyślny)
-//   'bg-gradient-to-br from-red-800 to-red-950'       ← czerwony
-//   'bg-gradient-to-br from-purple-800 to-purple-950' ← fioletowy
-//   'bg-gradient-to-br from-rose-800 to-rose-950'     ← różano-czerwony
-//   'bg-gradient-to-br from-orange-800 to-orange-950' ← pomarańczowy
-//   'bg-gradient-to-br from-yellow-800 to-yellow-950' ← złoty
-const ALKOHOLE_GRADIENT = 'bg-gradient-to-br from-amber-800 to-amber-950'
-
-// ——— PRZYCISKI NA PANELACH SUWAKA ———————————————————————
-
-// Kolor tła przycisku "Poznaj ofertę →" (widoczny po najechaniu na panel)
-// Opcje: 'bg-yellow-400' (żółty, domyślny) | 'bg-amber-400' | 'bg-orange-400' | 'bg-white' | 'bg-green-400'
-const PRZYCISK_KOLOR = 'bg-yellow-400'
-
-// Kolor tekstu przycisku
-// Opcje: 'text-gray-900' (ciemny, domyślny) | 'text-black' | 'text-white'
-const PRZYCISK_TEKST = 'text-gray-900'
-
-// Zaokrąglenie przycisku
-// Opcje: 'rounded-none' (prostokąt) | 'rounded-lg' | 'rounded-xl' | 'rounded-full' (pigułka, domyślne)
-const PRZYCISK_ZAOKRAGLENIE = 'rounded-full'
+// Opis ALKOHOLE w sekcji
+const OPIS_ALKOHOLE = {
+  tytul:   'Alkohole Świata Węgorzewo',
+  tekst:   'Wyjątkowy sklep dla miłośników alkoholi z całego świata. Wina, whisky, giny, rumy i wiele innych trunków od sprawdzonych producentów. Zapraszamy koneserów i poszukiwaczy nowych smaków.',
+  godziny: 'Pn–Pt: 10:00–20:00 | Sob: 10:00–16:00',
+}
 
 // ============================================================
 // KOD STRONY — nie musisz tu nic zmieniać
@@ -125,7 +100,7 @@ export default function StronaGlowna() {
         <div className={`flex flex-col sm:flex-row items-center justify-center gap-8 sm:${LOGO_ODSTEP}`}>
 
           <div className="inline-flex items-center gap-3">
-            <span className={LOGO_IKONA_ROZMIAR}>{BOSS.ikona}</span>
+            <span className={LOGO_IKONA_ROZMIAR}>🛒</span>
             <div className="text-left">
               <div className={`${LOGO_BOSS_ROZMIAR} font-black text-yellow-400 tracking-widest leading-none`}>{BOSS.nazwa}</div>
               <div className="text-gray-400 text-sm tracking-[0.3em] uppercase">{BOSS.miasto}</div>
@@ -136,10 +111,10 @@ export default function StronaGlowna() {
           <div className="sm:hidden w-24 h-px bg-gray-600"></div>
 
           <div className="inline-flex items-center gap-3">
-            <span className={LOGO_IKONA_ROZMIAR}>{ALKOHOLE.ikona}</span>
+            <span className={LOGO_IKONA_ROZMIAR}>🍷</span>
             <div className="text-left">
-              <div className={`${LOGO_ALKOHOLE_ROZMIAR} font-black text-yellow-400 tracking-wide leading-tight`}>{ALKOHOLE.nazwa1}</div>
-              <div className={`${LOGO_ALKOHOLE_ROZMIAR} font-black text-amber-300 tracking-wide leading-tight`}>{ALKOHOLE.nazwa2}</div>
+              <div className={`${LOGO_ALKOHOLE_ROZMIAR} font-black text-yellow-400 tracking-wide leading-tight`}>ALKOHOLE</div>
+              <div className={`${LOGO_ALKOHOLE_ROZMIAR} font-black text-amber-300 tracking-wide leading-tight`}>ŚWIATA</div>
               <div className="text-gray-400 text-sm tracking-[0.3em] uppercase">{ALKOHOLE.miasto}</div>
             </div>
           </div>
@@ -147,41 +122,123 @@ export default function StronaGlowna() {
         </div>
       </section>
 
-      {/* Suwak — dwa panele, pełna szerokość */}
-      <div className={`flex flex-col md:flex-row ${SUWAK_WYSOKOSC} min-h-[240px] w-full group`}>
+      {/* Suwak — dwa panele ze zdjęciami */}
+      <div className={`flex flex-col md:flex-row ${SUWAK_WYSOKOSC} min-h-[200px] w-full group`}>
 
-        <Link to="/boss" className={`relative flex-1 flex flex-col items-center justify-center overflow-hidden cursor-pointer bg-gray-800 transition-all ${SUWAK_ANIMACJA} ease-in-out md:hover:flex-[2] md:group-hover:flex-[0.6] md:group-hover:[&:hover]:flex-[2]`}>
-          <div className={`absolute inset-0 ${BOSS_GRADIENT} opacity-80`}></div>
-          <div className="relative z-10 text-center px-8 transition-transform duration-500 hover:scale-105">
-            <div className={`${SUWAK_IKONA_ROZMIAR} mb-4 drop-shadow-lg`}>{BOSS.ikona}</div>
-            <h2 className={`${SUWAK_BOSS_ROZMIAR} font-black text-yellow-400 tracking-widest mb-2`}>{BOSS.nazwa}</h2>
-            <p className="text-gray-300 text-lg tracking-widest uppercase mb-6">{BOSS.miasto}</p>
-            <div className="overflow-hidden max-h-0 md:group-hover:max-h-0 md:[&:hover]:max-h-40 transition-all duration-500">
-              <p className="text-gray-300 mb-4 text-sm">{BOSS.opis}</p>
-              <span className={`inline-block ${PRZYCISK_KOLOR} ${PRZYCISK_TEKST} px-6 py-2 ${PRZYCISK_ZAOKRAGLENIE} font-bold text-sm`}>Poznaj ofertę →</span>
-            </div>
+        {/* ===== Panel BOSS ===== */}
+        {/*
+          Tło panelu jest BIAŁE — logo BOSS ma białe tło, więc zlewa się z panelem.
+          Zdjęcie wypełnia cały panel (object-cover). Przy najechaniu powiększa się.
+          Od dołu wyjeżdża opis.
+        */}
+        <Link
+          to="/boss"
+          className={`group/boss relative flex-1 overflow-hidden cursor-pointer bg-white transition-all ${SUWAK_ANIMACJA} ease-in-out md:hover:flex-[2] md:group-hover:flex-[0.6] md:group-hover:[&:hover]:flex-[2]`}
+        >
+          {/* Zdjęcie — pełne tło z efektem zoom */}
+          <img
+            src={bossZdjecie}
+            alt="BOSS Węgorzewo"
+            className={`absolute inset-0 w-full h-full object-cover object-center scale-100 group-hover/boss:scale-110 transition-transform duration-700 ease-out`}
+          />
+
+          {/* Gradient od dołu — przyciemnia dolną część żeby tekst był czytelny */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
+
+          {/* Nazwa i miasto — zawsze widoczne na dole */}
+          <div className="absolute bottom-8 inset-x-0 text-center z-10 transition-all duration-500 group-hover/boss:opacity-0 group-hover/boss:translate-y-4">
+            <p className="text-3xl font-black text-yellow-400 tracking-widest drop-shadow-xl">{BOSS.nazwa}</p>
+            <p className="text-white/70 text-xs tracking-[0.25em] uppercase mt-1">{BOSS.miasto}</p>
           </div>
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-yellow-400 text-sm tracking-widest uppercase opacity-60">kliknij</div>
+
+          {/* Opis — wyjeżdża od dołu przy hover */}
+          <div className="absolute inset-x-0 bottom-0 z-20 bg-black/85 px-6 py-7 text-center translate-y-full group-hover/boss:translate-y-0 transition-transform duration-500 ease-out">
+            <p className="text-xl font-black text-yellow-400 mb-2">{BOSS.nazwa}</p>
+            <p className="text-gray-300 text-sm leading-relaxed mb-5">{BOSS.opis}</p>
+            <span className="inline-block bg-yellow-400 text-gray-900 px-6 py-2 rounded-full font-bold text-sm">
+              {BOSS.przycisk}
+            </span>
+          </div>
         </Link>
 
-        <div className="hidden md:block w-0.5 bg-yellow-400 opacity-30 flex-shrink-0"></div>
+        {/* Linia rozdzielająca panele */}
+        <div className="hidden md:block w-px bg-yellow-400/40 flex-shrink-0"></div>
 
-        <Link to="/alkohole" className={`relative flex-1 flex flex-col items-center justify-center overflow-hidden cursor-pointer bg-amber-900 transition-all ${SUWAK_ANIMACJA} ease-in-out md:hover:flex-[2] md:group-hover:flex-[0.6] md:group-hover:[&:hover]:flex-[2]`}>
-          <div className={`absolute inset-0 ${ALKOHOLE_GRADIENT} opacity-80`}></div>
-          <div className="relative z-10 text-center px-8 transition-transform duration-500 hover:scale-105">
-            <div className={`${SUWAK_IKONA_ROZMIAR} mb-4 drop-shadow-lg`}>{ALKOHOLE.ikona}</div>
-            <h2 className={`${SUWAK_ALKOHOLE_ROZMIAR} font-black text-yellow-400 tracking-wide mb-1`}>{ALKOHOLE.nazwa1}</h2>
-            <h2 className={`${SUWAK_ALKOHOLE_ROZMIAR} font-black text-amber-300 tracking-wide mb-2`}>{ALKOHOLE.nazwa2}</h2>
-            <p className="text-amber-200 text-lg tracking-widest uppercase mb-6">{ALKOHOLE.miasto}</p>
-            <div className="overflow-hidden max-h-0 md:group-hover:max-h-0 md:[&:hover]:max-h-40 transition-all duration-500">
-              <p className="text-amber-200 mb-4 text-sm">{ALKOHOLE.opis}</p>
-              <span className={`inline-block ${PRZYCISK_KOLOR} ${PRZYCISK_TEKST} px-6 py-2 ${PRZYCISK_ZAOKRAGLENIE} font-bold text-sm`}>Poznaj ofertę →</span>
-            </div>
+        {/* ===== Panel ALKOHOLE ŚWIATA ===== */}
+        {/*
+          Tło panelu jest CIEMNOCZERWONE — banner ma ciemne tło, zlewa się z panelem.
+          Identyczna struktura jak BOSS.
+        */}
+        <Link
+          to="/alkohole"
+          className={`group/alkohole relative flex-1 overflow-hidden cursor-pointer bg-red-950 transition-all ${SUWAK_ANIMACJA} ease-in-out md:hover:flex-[2] md:group-hover:flex-[0.6] md:group-hover:[&:hover]:flex-[2]`}
+        >
+          {/* Zdjęcie — pełne tło z efektem zoom */}
+          <img
+            src={alkoholeZdjecie}
+            alt="Alkohole Świata Węgorzewo"
+            className={`absolute inset-0 w-full h-full object-cover object-center scale-100 group-hover/alkohole:scale-110 transition-transform duration-700 ease-out`}
+          />
+
+          {/* Gradient od dołu */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+
+          {/* Nazwa i miasto — zawsze widoczne na dole */}
+          <div className="absolute bottom-8 inset-x-0 text-center z-10 transition-all duration-500 group-hover/alkohole:opacity-0 group-hover/alkohole:translate-y-4">
+            <p className="text-2xl font-black text-yellow-400 tracking-wide drop-shadow-xl leading-tight">ALKOHOLE</p>
+            <p className="text-2xl font-black text-amber-300 tracking-wide drop-shadow-xl leading-tight">ŚWIATA</p>
+            <p className="text-white/70 text-xs tracking-[0.25em] uppercase mt-1">{ALKOHOLE.miasto}</p>
           </div>
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-yellow-400 text-sm tracking-widest uppercase opacity-60">kliknij</div>
+
+          {/* Opis — wyjeżdża od dołu przy hover */}
+          <div className="absolute inset-x-0 bottom-0 z-20 bg-black/85 px-6 py-7 text-center translate-y-full group-hover/alkohole:translate-y-0 transition-transform duration-500 ease-out">
+            <p className="text-xl font-black text-yellow-400 mb-2">ALKOHOLE ŚWIATA</p>
+            <p className="text-gray-300 text-sm leading-relaxed mb-5">{ALKOHOLE.opis}</p>
+            <span className="inline-block bg-yellow-400 text-gray-900 px-6 py-2 rounded-full font-bold text-sm">
+              {ALKOHOLE.przycisk}
+            </span>
+          </div>
         </Link>
 
       </div>
+
+      {/* Sekcja opisów pod suwakiem */}
+      <section className={`${OPISY_TLO} ${OPISY_PADDING} px-4`}>
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">{OPISY_TYTUL}</h2>
+          <div className="grid md:grid-cols-2 gap-8">
+
+            <div className="bg-gray-800 text-white rounded-2xl p-8 shadow-xl">
+              <div className="text-4xl mb-4">🛒</div>
+              <h3 className="text-2xl font-bold text-yellow-400 mb-3">{OPIS_BOSS.tytul}</h3>
+              <p className="text-gray-300 leading-relaxed mb-5">{OPIS_BOSS.tekst}</p>
+              <p className="text-gray-400 text-sm mb-6">🕐 {OPIS_BOSS.godziny}</p>
+              <Link to="/boss" className="inline-block bg-yellow-400 text-gray-900 px-6 py-2 rounded-full font-bold hover:bg-yellow-300 transition-colors">
+                Dowiedz się więcej →
+              </Link>
+            </div>
+
+            <div className="bg-amber-800 text-white rounded-2xl p-8 shadow-xl">
+              <div className="text-4xl mb-4">🍷</div>
+              <h3 className="text-2xl font-bold text-yellow-400 mb-3">{OPIS_ALKOHOLE.tytul}</h3>
+              <p className="text-amber-100 leading-relaxed mb-5">{OPIS_ALKOHOLE.tekst}</p>
+              <p className="text-amber-300 text-sm mb-6">🕐 {OPIS_ALKOHOLE.godziny}</p>
+              <Link to="/alkohole" className="inline-block bg-yellow-400 text-gray-900 px-6 py-2 rounded-full font-bold hover:bg-yellow-300 transition-colors">
+                Dowiedz się więcej →
+              </Link>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* Dolny pasek kontaktowy */}
+      <section className="bg-gray-900 py-10 px-4 text-center border-t border-gray-700">
+        <p className="text-gray-400 mb-4">Znajdź nas w Węgorzewie — jesteśmy tu dla Ciebie</p>
+        <Link to="/kontakt" className="bg-yellow-400 text-gray-900 px-8 py-3 rounded-full font-bold hover:opacity-90 transition-opacity">
+          Kontakt i mapa →
+        </Link>
+      </section>
 
     </main>
   )
