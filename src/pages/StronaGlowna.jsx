@@ -69,12 +69,12 @@ const OPISY_TLO = 'bg-white'
 // Odstęp nad sekcją "Nasze sklepy" (od suwaka do tytułu)
 // pt = padding-top (tylko góra), im większa liczba tym więcej miejsca
 // Opcje: 'pt-4' (mały) | 'pt-8' | 'pt-10' (domyślny) | 'pt-16' | 'pt-24' (duży)
-const OPISY_ODSTEP_GORA = 'pt-100'
+const OPISY_ODSTEP_GORA = 'pt-24'
 
 // Odstęp pod sekcją "Nasze sklepy" (od kart do następnej sekcji)
 // pb = padding-bottom (tylko dół)
 // Opcje: 'pb-8' (mały) | 'pb-12' | 'pb-16' (domyślny) | 'pb-24' (duży)
-const OPISY_ODSTEP_DOL = 'pb-100'
+const OPISY_ODSTEP_DOL = 'pb-24'
 
 // Tytuł sekcji opisów
 // Wyśrodkowanie tekstu: 'text-center' (środek) | 'text-left' (lewo) | 'text-right' (prawo)
@@ -103,11 +103,11 @@ const OPIS_ALKOHOLE = {
 
 // Odstęp nad sekcją "Nasza historia" (od kart do nagłówka)
 // Opcje: 'pt-8' (mały) | 'pt-12' | 'pt-16' (domyślny) | 'pt-24' (duży)
-const HISTORIA_ODSTEP_GORA = 'pt-16'
+const HISTORIA_ODSTEP_GORA = 'pt-24'
 
 // Odstęp pod sekcją "Nasza historia" (do stopki)
 // Opcje: 'pb-8' (mały) | 'pb-12' | 'pb-16' (domyślny) | 'pb-24' (duży)
-const HISTORIA_ODSTEP_DOL = 'pb-16'
+const HISTORIA_ODSTEP_DOL = 'pb-24'
 
 // Styl nagłówka "NASZA HISTORIA"
 // Wyśrodkowanie: 'text-center' (środek) | 'text-left' (lewo)
@@ -270,7 +270,7 @@ export default function StronaGlowna() {
 
       {/* Sekcja "Nasza historia" */}
       <section className={`bg-white w-full ${HISTORIA_ODSTEP_GORA} ${HISTORIA_ODSTEP_DOL} px-8`}>
-        <div className="max-w-3xl mx-auto">
+        <div className="w-full">
           <h2 className={`${HISTORIA_TYTUL_STYL} mb-8 tracking-wide`}>NASZA HISTORIA</h2>
           <p className={`${HISTORIA_TEKST_STYL} leading-relaxed mb-6`}>
             Wszystko zaczęło się w Węgorzewie — małym mieście na Mazurach, gdzie sąsiedzi znają się z imienia, a dobre słowo znaczy więcej niż reklama. To właśnie tutaj, ponad dwie dekady temu, rodzina Bossów otworzyła swój pierwszy sklep. Kilka półek, kilku stałych klientów i jeden prosty cel: dać mieszkańcom to, czego potrzebują, blisko domu.
