@@ -5,8 +5,6 @@
   <title>Siemano siemano co tam u was?</title>
 
   <style>
-    /* CSS — tu ustawiamy jak strona wygląda */
-
     body {
       background-color: #2f3c2e;
       font-family: Arial;
@@ -33,64 +31,50 @@
       border: none;
       border-radius: 8px;
       cursor: pointer;
+      margin-top: 20px;
+      display: block;
       margin-left: auto;
-  margin-right: auto;
-  display: block;;
+      margin-right: auto;
     }
 
     button:hover {
       background-color: #e0b000;
     }
-
-      button2 {
-      background-color: #f5c518;
-      color: #1a1a2e;
-      font-size: 18px;
-      font-weight: bold;
-      padding: 14px 32px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-
-    button2:hover {
-      background-color: #e0b000;
   </style>
 </head>
 
 <body>
-  <!-- HTML — tu piszemy co ma być na stronie -->
 
   <h1>Cześć wszystkim! </h1>
 
   <p>To jest moja pierwsza strona internetowa.</p>
 
   <button onclick="kliknij()">Darmowe bułeczki</button>
-  <button2 onclick="kliknij2()">Zmien kolor</button2>
+  <button onclick="zmienKolor()">Zmień kolor</button>
+
   <p id="wynik"></p>
 
   <script>
-    // JavaScript — tu piszemy co strona ma robić
-
-    // Licznik kliknięć — zaczyna od zera
     let licznik = 0
 
     function kliknij() {
-      // Dodaj 1 do licznika za każdym kliknięciem
       licznik = licznik + 1
-
-      // Pokaż wynik na stronie
       document.getElementById("wynik").innerText = "Kliknąłeś " + licznik + " razy"
       document.getElementById("wynik").style.color = "#f5c518"
       document.getElementById("wynik").style.fontSize = "28px"
     }
 
+    // Lista kolorów — każde kliknięcie zmienia na następny
+    let kolory = ["#1a1a2e", "#2d0000", "#003300", "#1a0033", "#2f3c2e"]
+    let aktualnyKolor = 0
 
-    function kliknij2() {
-      document.body.style.backgroundColor = "#kolor"
-      
-    
+    function zmienKolor() {
+      aktualnyKolor = aktualnyKolor + 1
+      if (aktualnyKolor >= kolory.length) {
+        aktualnyKolor = 0
+      }
+      document.body.style.backgroundColor = kolory[aktualnyKolor]
+    }
   </script>
 
 </body>
