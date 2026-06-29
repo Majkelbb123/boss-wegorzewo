@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Moja pierwsza strona</title>
+
+  <style>
+    /* CSS — tu ustawiamy jak strona wygląda */
+
+    body {
+      background-color: #1a1a2e;
+      font-family: Arial;
+      text-align: center;
+      padding: 60px;
+    }
+
+    h1 {
+      color: #f5c518;
+      font-size: 48px;
+    }
+
+    p {
+      color: #cccccc;
+      font-size: 20px;
+    }
+
+    button {
+      background-color: #f5c518;
+      color: #1a1a2e;
+      font-size: 18px;
+      font-weight: bold;
+      padding: 14px 32px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background-color: #e0b000;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- HTML — tu piszemy co ma być na stronie -->
+
+  <h1>Cześć, Michał!</h1>
+
+  <p>To jest moja pierwsza strona internetowa.</p>
+
+  <button onclick="kliknij()">Kliknij mnie</button>
+
+  <p id="wynik"></p>
+
+  <script>
+    // JavaScript — tu piszemy co strona ma robić
+
+    function kliknij() {
+      document.getElementById("wynik").innerText = "Działa! 🎉"
+      document.getElementById("wynik").style.color = "#f5c518"
+      document.getElementById("wynik").style.fontSize = "28px"
+    }
+  </script>
+
+</body>
+
+</html>
