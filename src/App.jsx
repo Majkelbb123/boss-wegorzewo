@@ -12,7 +12,7 @@ function App() {
     <BrowserRouter basename={import.meta.env.BASE_URL}>
       <div className="min-h-screen flex flex-col bg-gray-50">
         <Navbar />
-        <div>
+        <div className="w-full">
           <Routes>
             <Route path="/" element={<StronaGlowna />} />
             <Route path="/boss" element={<BossStrona />} />
