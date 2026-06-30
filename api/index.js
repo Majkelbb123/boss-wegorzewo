@@ -2,6 +2,7 @@
 const express = require('express')
 const cors    = require('cors')
 const db      = require('./db')
+const auth    = require('./auth')
 require('dotenv').config()
 
 const app  = express()
@@ -10,6 +11,9 @@ const PORT = process.env.API_PORT || 3001
 // cors pozwala stronie React (localhost:5175) rozmawiać z tym serwerem (localhost:3001)
 app.use(cors())
 app.use(express.json())
+
+// ─── AUTORYZACJA (rejestracja, logowanie, potwierdzenie email) ─
+app.use('/api/auth', auth)
 
 // ─── PRODUKTY ────────────────────────────────────────────────
 // GET /api/produkty          → wszystkie produkty

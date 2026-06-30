@@ -27,6 +27,7 @@ function Zawartosc() {
           <Route path="/alkohole" element={<AlkoholeStrona />} />
           <Route path="/kontakt" element={<Kontakt />} />
           <Route path="/zaloguj" element={<Logowanie />} />
+          <Route path="/potwierdz-email" element={<Logowanie />} />
           <Route path="/admin" element={<AdminPanel />} />
         </Routes>
       </div>
