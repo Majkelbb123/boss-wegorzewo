@@ -9,6 +9,7 @@ import AdminPanel from './pages/Admin/AdminPanel'
 import Logowanie from './pages/Logowanie'
 import Aktualnosci from './pages/Aktualnosci'
 import AktualnoscSzczegol from './pages/AktualnoscSzczegol'
+import MojeKonto from './pages/MojeKonto'
 
 // Panel admina ma własny wygląd — bez Navbar i Stopki
 function Zawartosc() {
@@ -31,6 +32,7 @@ function Zawartosc() {
           <Route path="/aktualnosci" element={<Aktualnosci />} />
           <Route path="/aktualnosci/:id" element={<AktualnoscSzczegol />} />
           <Route path="/zaloguj" element={<Logowanie />} />
+          <Route path="/moje-konto" element={<MojeKonto />} />
           <Route path="/potwierdz-email" element={<Logowanie />} />
           <Route path="/admin" element={<AdminPanel />} />
         </Routes>

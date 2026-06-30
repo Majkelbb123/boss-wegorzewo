@@ -145,4 +145,61 @@ router.post('/logowanie', async (req, res) => {
   }
 })
 
+// ── MIDDLEWARE: sprawdź czy użytkownik jest zalogowany ─────────
+function weryfikujToken(req, res, next) {
+  const naglowek = req.headers.authorization
+  if (!naglowek) return res.status(401).json({ blad: 'Brak tokenu — zaloguj się' })
+  const token = naglowek.split(' ')[1] // format: "Bearer <token>"
+  try {
+    req.uzytkownik = jwt.verify(token, JWT_SECRET)
+    next()
+  } catch {
+    res.status(401).json({ blad: 'Token nieważny lub wygasł — zaloguj się ponownie' })
+  }
+}
+
+// ── PROFIL ─────────────────────────────────────────────────────
+// GET /api/auth/profil   (wymaga tokenu)
+router.get('/profil', weryfikujToken, async (req, res) => {
+  try {
+    const wynik = await db.query(
+      'SELECT id, email, created_at FROM uzytkownicy WHERE id = $1',
+      [req.uzytkownik.id]
+    )
+    if (wynik.rows.length === 0) return res.status(404).json({ blad: 'Nie znaleziono użytkownika' })
+    res.json(wynik.rows[0])
+  } catch (blad) {
+    console.error(blad)
+    res.status(500).json({ blad: 'Błąd serwera' })
+  }
+})
+
+// ── ZMIANA HASŁA ───────────────────────────────────────────────
+// PUT /api/auth/zmien-haslo   (wymaga tokenu)
+router.put('/zmien-haslo', weryfikujToken, async (req, res) => {
+  try {
+    const { aktualneHaslo, noweHaslo } = req.body
+
+    if (!aktualneHaslo || !noweHaslo) return res.status(400).json({ blad: 'Oba pola są wymagane' })
+    if (noweHaslo.length < 6)         return res.status(400).json({ blad: 'Nowe hasło musi mieć co najmniej 6 znaków' })
+
+    // Pobierz aktualne hasło z bazy
+    const wynik = await db.query('SELECT haslo_hash FROM uzytkownicy WHERE id = $1', [req.uzytkownik.id])
+    const user  = wynik.rows[0]
+
+    // Sprawdź czy aktualne hasło jest poprawne
+    const poprawne = await bcrypt.compare(aktualneHaslo, user.haslo_hash)
+    if (!poprawne) return res.status(400).json({ blad: 'Aktualne hasło jest nieprawidłowe' })
+
+    // Zaszyfruj i zapisz nowe hasło
+    const nowyHash = await bcrypt.hash(noweHaslo, 12)
+    await db.query('UPDATE uzytkownicy SET haslo_hash = $1 WHERE id = $2', [nowyHash, req.uzytkownik.id])
+
+    res.json({ sukces: true, wiadomosc: 'Hasło zostało zmienione!' })
+  } catch (blad) {
+    console.error(blad)
+    res.status(500).json({ blad: 'Błąd serwera' })
+  }
+})
+
 module.exports = router

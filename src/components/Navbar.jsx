@@ -1,9 +1,15 @@
 import { Link, useLocation } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function Navbar() {
-  const [otwarte, setOtwarte] = useState(false)
+  const [otwarte, setOtwarte]       = useState(false)
+  const [zalogowany, setZalogowany] = useState(false)
   const lokalizacja = useLocation()
+
+  // Sprawdzaj przy każdej zmianie trasy czy token nadal jest w localStorage
+  useEffect(() => {
+    setZalogowany(!!localStorage.getItem('token'))
+  }, [lokalizacja.pathname])
 
   const aktywny = (sciezka) => lokalizacja.pathname === sciezka
 
@@ -115,18 +121,33 @@ export default function Navbar() {
           {/* Separator */}
           <div style={{ height: '1px', background: '#374151', margin: '0.75rem 1.25rem' }} />
 
-          <Link to="/zaloguj" onClick={zamknij} style={{
-            display: 'flex', alignItems: 'center', gap: '0.75rem',
-            padding: '0.85rem 1.25rem',
-            color: aktywny('/zaloguj') ? '#fbbf24' : '#d1d5db',
-            fontWeight: aktywny('/zaloguj') ? 700 : 400,
-            textDecoration: 'none',
-            background: aktywny('/zaloguj') ? 'rgba(251,191,36,0.1)' : 'transparent',
-            borderLeft: aktywny('/zaloguj') ? '3px solid #fbbf24' : '3px solid transparent',
-          }}>
-            <span style={{ fontSize: '1.2rem' }}>🔐</span>
-            Zaloguj się
-          </Link>
+          {zalogowany ? (
+            <Link to="/moje-konto" onClick={zamknij} style={{
+              display: 'flex', alignItems: 'center', gap: '0.75rem',
+              padding: '0.85rem 1.25rem',
+              color: aktywny('/moje-konto') ? '#fbbf24' : '#d1d5db',
+              fontWeight: aktywny('/moje-konto') ? 700 : 400,
+              textDecoration: 'none',
+              background: aktywny('/moje-konto') ? 'rgba(251,191,36,0.1)' : 'transparent',
+              borderLeft: aktywny('/moje-konto') ? '3px solid #fbbf24' : '3px solid transparent',
+            }}>
+              <span style={{ fontSize: '1.2rem' }}>👤</span>
+              Moje konto
+            </Link>
+          ) : (
+            <Link to="/zaloguj" onClick={zamknij} style={{
+              display: 'flex', alignItems: 'center', gap: '0.75rem',
+              padding: '0.85rem 1.25rem',
+              color: aktywny('/zaloguj') ? '#fbbf24' : '#d1d5db',
+              fontWeight: aktywny('/zaloguj') ? 700 : 400,
+              textDecoration: 'none',
+              background: aktywny('/zaloguj') ? 'rgba(251,191,36,0.1)' : 'transparent',
+              borderLeft: aktywny('/zaloguj') ? '3px solid #fbbf24' : '3px solid transparent',
+            }}>
+              <span style={{ fontSize: '1.2rem' }}>🔐</span>
+              Zaloguj się
+            </Link>
+          )}
 
         </nav>
 
