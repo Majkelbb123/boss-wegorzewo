@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 // ─── LOGOWANIE ────────────────────────────────────────────────
 
 function Logowanie({ onZaloguj }) {
-  const [haslo, setHaslo]   = useState('')
-  const [blad, setBlad]     = useState('')
-  const [laduje, setLaduje] = useState(false)
+  const [haslo, setHaslo]         = useState('')
+  const [blad, setBlad]           = useState('')
+  const [laduje, setLaduje]       = useState(false)
+  const [pokazHaslo, setPokazHaslo] = useState(false)
 
   const zaloguj = async (e) => {
     e.preventDefault()
@@ -31,17 +33,29 @@ function Logowanie({ onZaloguj }) {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f3f4f6' }}>
       <div style={{ background: '#fff', padding: '2.5rem', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.1)', width: '100%', maxWidth: '380px' }}>
+        <Link to="/zaloguj" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', color: '#9ca3af', textDecoration: 'none', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
+          ← Wróć
+        </Link>
         <h1 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: '0.25rem' }}>Panel admina</h1>
         <p style={{ color: '#888', marginBottom: '2rem', fontSize: '0.9rem' }}>BOSS & Alkohole Świata Węgorzewo</p>
 
         <form onSubmit={zaloguj}>
-          <input
-            type="password"
-            placeholder="Wpisz hasło..."
-            value={haslo}
-            onChange={e => setHaslo(e.target.value)}
-            style={{ width: '100%', padding: '0.75rem 1rem', border: '2px solid #e5e7eb', borderRadius: '10px', fontSize: '1rem', marginBottom: '1rem', boxSizing: 'border-box' }}
-          />
+          <div style={{ position: 'relative', marginBottom: '1rem' }}>
+            <input
+              type={pokazHaslo ? 'text' : 'password'}
+              placeholder="Wpisz hasło..."
+              value={haslo}
+              onChange={e => setHaslo(e.target.value)}
+              style={{ width: '100%', padding: '0.75rem 3rem 0.75rem 1rem', border: '2px solid #e5e7eb', borderRadius: '10px', fontSize: '1rem', boxSizing: 'border-box' }}
+            />
+            <button
+              type="button"
+              onClick={() => setPokazHaslo(!pokazHaslo)}
+              style={{ position: 'absolute', right: '0.75rem', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.1rem', color: '#9ca3af' }}
+            >
+              {pokazHaslo ? '🙈' : '👁️'}
+            </button>
+          </div>
           {blad && <p style={{ color: '#e44', marginBottom: '1rem', fontSize: '0.9rem' }}>{blad}</p>}
           <button
             type="submit"
@@ -368,7 +382,12 @@ export default function AdminPanel() {
     <div style={{ minHeight: '100vh', background: '#f3f4f6' }}>
       {/* Górny pasek */}
       <div style={{ background: '#1a1a1a', color: '#fff', padding: '1rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <strong>Panel admina — BOSS & Alkohole Świata</strong>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <Link to="/zaloguj" style={{ color: '#9ca3af', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.9rem' }}>
+            ← Wróć
+          </Link>
+          <strong style={{ color: '#fff' }}>Panel admina — BOSS & Alkohole Świata</strong>
+        </div>
         <button onClick={() => setZalogowany(false)} style={{ background: 'transparent', border: '1px solid #666', color: '#ccc', borderRadius: '8px', padding: '0.35rem 0.85rem', cursor: 'pointer' }}>
           Wyloguj
         </button>

@@ -44,13 +44,15 @@ function PotwierdzEmail() {
 // ── Główna strona logowania / rejestracji ──────────────────────
 export default function Logowanie() {
   const navigate = useNavigate()
-  const [tryb, setTryb]           = useState('logowanie') // logowanie | rejestracja
-  const [email, setEmail]         = useState('')
-  const [haslo, setHaslo]         = useState('')
-  const [haslo2, setHaslo2]       = useState('')
-  const [laduje, setLaduje]       = useState(false)
-  const [blad, setBlad]           = useState('')
-  const [sukces, setSukces]       = useState('')
+  const [tryb, setTryb]               = useState('logowanie') // logowanie | rejestracja
+  const [email, setEmail]             = useState('')
+  const [haslo, setHaslo]             = useState('')
+  const [haslo2, setHaslo2]           = useState('')
+  const [laduje, setLaduje]           = useState(false)
+  const [blad, setBlad]               = useState('')
+  const [sukces, setSukces]           = useState('')
+  const [pokazHaslo, setPokazHaslo]   = useState(false)
+  const [pokazHaslo2, setPokazHaslo2] = useState(false)
 
   // Sprawdź czy to strona potwierdzenia emaila
   const [searchParams] = useSearchParams()
@@ -128,15 +130,47 @@ export default function Logowanie() {
 
               <div>
                 <label style={s.etykieta}>Hasło</label>
-                <input type="password" placeholder="••••••••" required value={haslo}
-                  onChange={e => { setHaslo(e.target.value); wyczysc() }} style={s.input} />
+                <div style={{ position: 'relative' }}>
+                  <input
+                    type={pokazHaslo ? 'text' : 'password'}
+                    placeholder="••••••••"
+                    required
+                    value={haslo}
+                    onChange={e => { setHaslo(e.target.value); wyczysc() }}
+                    style={{ ...s.input, paddingRight: '3rem' }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setPokazHaslo(!pokazHaslo)}
+                    style={{ position: 'absolute', right: '0.75rem', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.1rem', padding: '0' }}
+                    title={pokazHaslo ? 'Ukryj hasło' : 'Pokaż hasło'}
+                  >
+                    {pokazHaslo ? '🙈' : '👁️'}
+                  </button>
+                </div>
               </div>
 
               {tryb === 'rejestracja' && (
                 <div>
                   <label style={s.etykieta}>Powtórz hasło</label>
-                  <input type="password" placeholder="••••••••" required value={haslo2}
-                    onChange={e => { setHaslo2(e.target.value); wyczysc() }} style={s.input} />
+                  <div style={{ position: 'relative' }}>
+                    <input
+                      type={pokazHaslo2 ? 'text' : 'password'}
+                      placeholder="••••••••"
+                      required
+                      value={haslo2}
+                      onChange={e => { setHaslo2(e.target.value); wyczysc() }}
+                      style={{ ...s.input, paddingRight: '3rem' }}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setPokazHaslo2(!pokazHaslo2)}
+                      style={{ position: 'absolute', right: '0.75rem', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.1rem', padding: '0' }}
+                      title={pokazHaslo2 ? 'Ukryj hasło' : 'Pokaż hasło'}
+                    >
+                      {pokazHaslo2 ? '🙈' : '👁️'}
+                    </button>
+                  </div>
                 </div>
               )}
 
