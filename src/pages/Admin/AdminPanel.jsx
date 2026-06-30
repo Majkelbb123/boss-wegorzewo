@@ -248,9 +248,12 @@ function Produkty() {
 // ─── SEKCJA AKTUALNOŚCI ───────────────────────────────────────
 
 function Aktualnosci() {
-  const [lista, setLista] = useState([])
-  const [formularz, setFormularz] = useState({ firma: 'BOSS', tytul: '', tresc: '' })
-  const [komunikat, setKomunikat] = useState('')
+  const pustyFormularz = { firma: 'BOSS', tytul: '', tresc: '' }
+  const [lista, setLista]           = useState([])
+  const [formularz, setFormularz]   = useState(pustyFormularz)
+  const [edytowanyId, setEdytowanyId] = useState(null) // null = dodawanie, liczba = edycja
+  const [komunikat, setKomunikat]   = useState('')
+  const [blad, setBlad]             = useState('')
 
   const pobierz = async () => {
     const odp = await fetch('/api/aktualnosci')
@@ -259,15 +262,38 @@ function Aktualnosci() {
 
   useEffect(() => { pobierz() }, [])
 
-  const dodaj = async (e) => {
+  const zacznijEdycje = (a) => {
+    setFormularz({ firma: a.firma, tytul: a.tytul, tresc: a.tresc || '' })
+    setEdytowanyId(a.id)
+    setBlad('')
+    setKomunikat('')
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const anulujEdycje = () => {
+    setFormularz(pustyFormularz)
+    setEdytowanyId(null)
+    setBlad('')
+  }
+
+  const zapisz = async (e) => {
     e.preventDefault()
-    await fetch('/api/admin/aktualnosci', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formularz),
-    })
-    setFormularz({ firma: 'BOSS', tytul: '', tresc: '' })
-    setKomunikat('✅ Aktualność dodana!')
+    setBlad('')
+    setKomunikat('')
+    const czyEdycja = edytowanyId !== null
+    const odp = await fetch(
+      czyEdycja ? `/api/admin/aktualnosci/${edytowanyId}` : '/api/admin/aktualnosci',
+      {
+        method: czyEdycja ? 'PUT' : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formularz),
+      }
+    )
+    const dane = await odp.json()
+    if (!odp.ok) { setBlad('❌ ' + (dane.blad || 'Błąd')); return }
+    setFormularz(pustyFormularz)
+    setEdytowanyId(null)
+    setKomunikat(czyEdycja ? '✅ Zmiany zapisane!' : '✅ Aktualność dodana!')
     pobierz()
     setTimeout(() => setKomunikat(''), 3000)
   }
@@ -275,35 +301,58 @@ function Aktualnosci() {
   const usun = async (id) => {
     if (!confirm('Usunąć tę aktualność?')) return
     await fetch(`/api/admin/aktualnosci/${id}`, { method: 'DELETE' })
+    if (edytowanyId === id) anulujEdycje()
     pobierz()
   }
 
+  const trybEdycji = edytowanyId !== null
+
   return (
     <div>
-      <div style={{ background: '#f9fafb', border: '1px solid #e5e7eb', borderRadius: '12px', padding: '1.5rem', marginBottom: '2rem' }}>
-        <h2 style={{ fontWeight: 700, marginBottom: '1rem' }}>Dodaj aktualność</h2>
-        <form onSubmit={dodaj} style={{ display: 'grid', gap: '0.75rem' }}>
+      {/* Formularz dodawania / edycji */}
+      <div style={{ background: trybEdycji ? '#fffbeb' : '#f9fafb', border: `1px solid ${trybEdycji ? '#fcd34d' : '#e5e7eb'}`, borderRadius: '12px', padding: '1.5rem', marginBottom: '2rem' }}>
+        <h2 style={{ fontWeight: 700, marginBottom: '1rem' }}>
+          {trybEdycji ? '✏️ Edytujesz aktualność' : '+ Dodaj aktualność'}
+        </h2>
+        <form onSubmit={zapisz} style={{ display: 'grid', gap: '0.75rem' }}>
           <select value={formularz.firma} onChange={e => setFormularz({...formularz, firma: e.target.value})} style={styl.input}>
             <option value="BOSS">BOSS</option>
             <option value="ALKOHOLE">Alkohole Świata</option>
           </select>
           <input placeholder="Tytuł *" required value={formularz.tytul} onChange={e => setFormularz({...formularz, tytul: e.target.value})} style={styl.input} />
-          <textarea placeholder="Treść..." value={formularz.tresc} onChange={e => setFormularz({...formularz, tresc: e.target.value})} rows={4} style={{...styl.input, resize: 'vertical'}} />
-          <button type="submit" style={styl.przycisk}>+ Dodaj aktualność</button>
-          {komunikat && <p style={{ color: 'green', fontWeight: 600 }}>{komunikat}</p>}
+          <textarea placeholder="Treść..." value={formularz.tresc} onChange={e => setFormularz({...formularz, tresc: e.target.value})} rows={5} style={{...styl.input, resize: 'vertical'}} />
+          <div style={{ display: 'flex', gap: '0.75rem' }}>
+            <button type="submit" style={{ ...styl.przycisk, flex: 1, background: trybEdycji ? '#d97706' : '#1a1a1a' }}>
+              {trybEdycji ? '💾 Zapisz zmiany' : '+ Dodaj aktualność'}
+            </button>
+            {trybEdycji && (
+              <button type="button" onClick={anulujEdycje} style={{ ...styl.przycisk, background: '#6b7280', flex: 'none', padding: '0.7rem 1.25rem' }}>
+                Anuluj
+              </button>
+            )}
+          </div>
+          {komunikat && <p style={{ color: 'green',   fontWeight: 600, margin: 0 }}>{komunikat}</p>}
+          {blad      && <p style={{ color: '#dc2626', fontWeight: 600, margin: 0 }}>{blad}</p>}
         </form>
       </div>
 
+      {/* Lista aktualności */}
       <h2 style={{ fontWeight: 700, marginBottom: '1rem' }}>Wszystkie aktualności ({lista.length})</h2>
       <div style={{ display: 'grid', gap: '0.5rem' }}>
+        {lista.length === 0 && (
+          <p style={{ color: '#888', textAlign: 'center', padding: '1rem' }}>Brak aktualności — dodaj pierwszą powyżej.</p>
+        )}
         {lista.map(a => (
-          <div key={a.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', background: '#fff', border: '1px solid #e5e7eb', borderRadius: '10px', padding: '0.75rem 1rem' }}>
-            <div>
+          <div key={a.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', background: edytowanyId === a.id ? '#fffbeb' : '#fff', border: `1px solid ${edytowanyId === a.id ? '#fcd34d' : '#e5e7eb'}`, borderRadius: '10px', padding: '0.75rem 1rem', gap: '0.75rem' }}>
+            <div style={{ flex: 1, minWidth: 0 }}>
               <span style={{ fontSize: '0.75rem', background: '#f3f4f6', padding: '2px 8px', borderRadius: '20px', marginRight: '0.5rem' }}>{a.firma}</span>
               <strong>{a.tytul}</strong>
-              {a.tresc && <p style={{ color: '#666', fontSize: '0.85rem', marginTop: '0.25rem' }}>{a.tresc.slice(0, 80)}...</p>}
+              {a.tresc && <p style={{ color: '#666', fontSize: '0.85rem', marginTop: '0.25rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{a.tresc}</p>}
             </div>
-            <button onClick={() => usun(a.id)} style={{ background: '#fee2e2', border: 'none', borderRadius: '8px', padding: '0.4rem 0.75rem', cursor: 'pointer', color: '#dc2626', flexShrink: 0, marginLeft: '1rem' }}>
+            <button onClick={() => zacznijEdycje(a)} style={{ background: '#fef3c7', border: 'none', borderRadius: '8px', padding: '0.4rem 0.75rem', cursor: 'pointer', color: '#d97706', flexShrink: 0 }}>
+              Edytuj
+            </button>
+            <button onClick={() => usun(a.id)} style={{ background: '#fee2e2', border: 'none', borderRadius: '8px', padding: '0.4rem 0.75rem', cursor: 'pointer', color: '#dc2626', flexShrink: 0 }}>
               Usuń
             </button>
           </div>

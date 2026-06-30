@@ -238,6 +238,20 @@ app.post('/api/admin/aktualnosci', async (req, res) => {
   }
 })
 
+app.put('/api/admin/aktualnosci/:id', async (req, res) => {
+  try {
+    const { firma, tytul, tresc } = req.body
+    const wynik = await db.query(
+      'UPDATE aktualnosci SET firma=$1, tytul=$2, tresc=$3 WHERE id=$4 RETURNING *',
+      [firma, tytul, tresc, req.params.id]
+    )
+    res.json(wynik.rows[0])
+  } catch (blad) {
+    console.error(blad)
+    res.status(500).json({ blad: 'Nie udało się edytować aktualności' })
+  }
+})
+
 app.delete('/api/admin/aktualnosci/:id', async (req, res) => {
   try {
     await db.query('DELETE FROM aktualnosci WHERE id=$1', [req.params.id])
