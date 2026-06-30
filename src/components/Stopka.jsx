@@ -22,7 +22,7 @@ const GODZINY = {
   niedziela:  'Niedziela: zamknięte', // info o niedzieli
 }
 
-const ROK = '2025' // rok w napisie prawa autorskie na samym dole
+const ROK = '2026' // rok w napisie prawa autorskie na samym dole
 
 // ——— WYGLĄD ————————————————————————————————————————————————
 
