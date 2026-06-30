@@ -1,6 +1,7 @@
 // Główny serwer API — pośrednik między stroną React a bazą danych
 const express = require('express')
 const cors    = require('cors')
+const path    = require('path')
 const db      = require('./db')
 const auth    = require('./auth')
 require('dotenv').config()
@@ -278,8 +279,17 @@ app.get('/api/ping', (req, res) => {
   res.json({ status: 'ok', wiadomosc: 'API działa!' })
 })
 
+// ─── SERWOWANIE STRONY REACT ──────────────────────────────────
+// Musi być NA KOŃCU — po wszystkich trasach /api
+const DIST = path.join(__dirname, '../dist')
+app.use(express.static(DIST))
+app.get(/.*/, (req, res) => {
+  res.sendFile(path.join(DIST, 'index.html'))
+})
+
 // Uruchamiamy serwer
-app.listen(PORT, () => {
-  console.log(`✅ Serwer API działa na porcie ${PORT}`)
-  console.log(`   Sprawdź: http://localhost:${PORT}/api/ping`)
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`✅ Serwer działa na porcie ${PORT}`)
+  console.log(`   Strona:  http://141.94.158.2:${PORT}`)
+  console.log(`   API:     http://141.94.158.2:${PORT}/api/ping`)
 })

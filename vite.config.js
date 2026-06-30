@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: '/boss-wegorzewo/',
+  base: '/',
   server: {
     allowedHosts: true,
     // Zapytania do /api przekazuje do serwera Express — przeglądarka nie musi znać portu 3001
