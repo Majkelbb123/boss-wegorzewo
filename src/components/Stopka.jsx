@@ -68,32 +68,54 @@ const ROZMIAR_TEKSTU = 'text-base'
 
 export default function Stopka() {
   return (
-    <footer className={`${TLO} ${KOLOR_TEKSTU} mt-auto ${PADDING}`}>
-      <div className={`max-w-6xl mx-auto px-4 ${UKLAD_KOLUMN} ${ODSTEP_KOLUMN} text-center`}>
-
-        <div>
-          <h3 className={`${KOLOR_TYTULOW} font-bold ${ROZMIAR_TYTULOW} mb-2`}>BOSS Węgorzewo</h3>
-          <p className={ROZMIAR_TEKSTU}>{BOSS.opis}</p>
-          <p className={ROZMIAR_TEKSTU}>{BOSS.ulica}</p>
-          <p className={ROZMIAR_TEKSTU}>tel. {BOSS.telefon}</p>
+    <footer
+      className="bg-gray-900 text-gray-300 mt-auto"
+      style={{ paddingTop: '2rem', paddingBottom: '2rem' }}
+    >
+      {/* Siatka 3 kolumn — na telefonie jedna pod drugą, na dużym ekranie obok siebie */}
+      <div
+        className="max-w-6xl mx-auto px-4"
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gap: '2rem',
+          alignItems: 'start',   /* kolumny wyrównane od góry */
+        }}
+      >
+        {/* telefon: tekst wyśrodkowany | duży ekran: tekst do lewej */}
+        <div className="text-center md:text-left">
+          <h3 className="text-yellow-400 font-bold text-lg" style={{ marginBottom: '0.5rem' }}>
+            BOSS Węgorzewo
+          </h3>
+          <p>{BOSS.opis}</p>
+          <p>{BOSS.ulica}</p>
+          <p>tel. {BOSS.telefon}</p>
         </div>
 
-        <div>
-          <h3 className={`${KOLOR_TYTULOW} font-bold ${ROZMIAR_TYTULOW} mb-2`}>Alkohole Świata</h3>
-          <p className={ROZMIAR_TEKSTU}>{ALKOHOLE.opis}</p>
-          <p className={ROZMIAR_TEKSTU}>{ALKOHOLE.ulica}</p>
-          <p className={ROZMIAR_TEKSTU}>tel. {ALKOHOLE.telefon}</p>
+        <div className="text-center md:text-left">
+          <h3 className="text-yellow-400 font-bold text-lg" style={{ marginBottom: '0.5rem' }}>
+            Alkohole Świata
+          </h3>
+          <p>{ALKOHOLE.opis}</p>
+          <p>{ALKOHOLE.ulica}</p>
+          <p>tel. {ALKOHOLE.telefon}</p>
         </div>
 
-        <div>
-          <h3 className={`${KOLOR_TYTULOW} font-bold ${ROZMIAR_TYTULOW} mb-2`}>Godziny otwarcia</h3>
-          <p className={ROZMIAR_TEKSTU}>{GODZINY.tygodniowe}</p>
-          <p className={ROZMIAR_TEKSTU}>{GODZINY.sobota}</p>
-          <p className={ROZMIAR_TEKSTU}>{GODZINY.niedziela}</p>
+        <div className="text-center md:text-left">
+          <h3 className="text-yellow-400 font-bold text-lg" style={{ marginBottom: '0.5rem' }}>
+            Godziny otwarcia
+          </h3>
+          <p>{GODZINY.tygodniowe}</p>
+          <p>{GODZINY.sobota}</p>
+          <p>{GODZINY.niedziela}</p>
         </div>
       </div>
 
-      <div className={`text-center mt-6 ${KOLOR_PRAWA} text-sm`}>
+      {/* Pasek z prawami autorskimi na samym dole */}
+      <div
+        className="text-gray-500 text-sm text-center"
+        style={{ marginTop: '1.5rem' }}
+      >
         © {ROK} BOSS & Alkohole Świata Węgorzewo
       </div>
     </footer>
