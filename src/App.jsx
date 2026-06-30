@@ -7,6 +7,7 @@ import AlkoholeStrona from './pages/Alkohole/AlkoholeStrona'
 import Kontakt from './pages/Kontakt'
 import AdminPanel from './pages/Admin/AdminPanel'
 import Logowanie from './pages/Logowanie'
+import Aktualnosci from './pages/Aktualnosci'
 
 // Panel admina ma własny wygląd — bez Navbar i Stopki
 function Zawartosc() {
@@ -26,6 +27,7 @@ function Zawartosc() {
           <Route path="/boss" element={<BossStrona />} />
           <Route path="/alkohole" element={<AlkoholeStrona />} />
           <Route path="/kontakt" element={<Kontakt />} />
+          <Route path="/aktualnosci" element={<Aktualnosci />} />
           <Route path="/zaloguj" element={<Logowanie />} />
           <Route path="/potwierdz-email" element={<Logowanie />} />
           <Route path="/admin" element={<AdminPanel />} />

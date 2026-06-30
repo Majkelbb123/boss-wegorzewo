@@ -99,6 +99,19 @@ export default function Navbar() {
             Alkohole Świata
           </Link>
 
+          <Link to="/aktualnosci" onClick={zamknij} style={{
+            display: 'flex', alignItems: 'center', gap: '0.75rem',
+            padding: '0.85rem 1.25rem',
+            color: aktywny('/aktualnosci') ? '#fbbf24' : '#d1d5db',
+            fontWeight: aktywny('/aktualnosci') ? 700 : 400,
+            textDecoration: 'none',
+            background: aktywny('/aktualnosci') ? 'rgba(251,191,36,0.1)' : 'transparent',
+            borderLeft: aktywny('/aktualnosci') ? '3px solid #fbbf24' : '3px solid transparent',
+          }}>
+            <span style={{ fontSize: '1.2rem' }}>📰</span>
+            Aktualności
+          </Link>
+
           {/* Separator */}
           <div style={{ height: '1px', background: '#374151', margin: '0.75rem 1.25rem' }} />
 
