@@ -79,7 +79,7 @@ export default function Logowanie() {
       const dane = await odp.json()
 
       if (!odp.ok) {
-        setBlad(dane.blad); return
+        setBlad(dane.blad); setLaduje(false); return
       }
 
       if (tryb === 'logowanie') {
