@@ -1,89 +1,141 @@
 import { Link, useLocation } from 'react-router-dom'
 import { useState } from 'react'
 
-// ============================================================
-// USTAWIENIA MENU — edytuj tylko tę sekcję
-// ============================================================
-
-// Kolor tła całego paska menu
-// Opcje: 'bg-gray-900' (bardzo ciemny, domyślny) | 'bg-gray-800' | 'bg-black' | 'bg-white' | 'bg-amber-900' | 'bg-blue-900' | 'bg-slate-800'
-const MENU_TLO = 'bg-gray-900'
-
-// Wysokość paska menu
-// Opcje: 'h-12' (wąski) | 'h-14' | 'h-16' (domyślny) | 'h-20' | 'h-24' (wysoki)
-const MENU_WYSOKOSC = 'h-16'
-
-// Kolor aktywnego linku (podstrona na której aktualnie jesteś)
-// Opcje: 'text-yellow-400' (żółty, domyślny) | 'text-white' | 'text-amber-300' | 'text-green-400' | 'text-blue-400' | 'text-orange-400'
-const LINK_AKTYWNY_KOLOR = 'text-yellow-400'
-
-// Lista pozycji w menu — możesz zmieniać teksty, ale NIE zmieniaj wartości "do"
-// (wartość "do" to adres strony, zmiana jej sprawi że link przestanie działać)
-// Możesz dodać z powrotem: { do: '/boss', tekst: 'BOSS' }, { do: '/alkohole', tekst: 'Alkohole Świata' }, { do: '/kontakt', tekst: 'Kontakt' }
-const LINKI_MENU = [
-  { do: '/', tekst: 'Strona główna' },
-]
-
-// ============================================================
-// KOD MENU — nie musisz tu nic zmieniać
-// ============================================================
-
 export default function Navbar() {
-  const [menuOtwarte, setMenuOtwarte] = useState(false)
+  const [otwarte, setOtwarte] = useState(false)
   const lokalizacja = useLocation()
 
+  const aktywny = (sciezka) => lokalizacja.pathname === sciezka
+
+  const zamknij = () => setOtwarte(false)
+
   return (
-    <nav className={`${MENU_TLO} text-white shadow-lg`}>
-      <div className="max-w-6xl mx-auto px-4">
-        <div className={`flex justify-start items-center ${MENU_WYSOKOSC}`}>
+    <>
+      {/* Pasek górny — tylko przycisk hamburgera */}
+      <div style={{
+        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
+        height: '56px',
+        background: '#111827',
+        display: 'flex', alignItems: 'center', padding: '0 1rem',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+      }}>
+        <button
+          onClick={() => setOtwarte(true)}
+          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '6px', display: 'flex', flexDirection: 'column', gap: '5px' }}
+          aria-label="Otwórz menu"
+        >
+          <span style={{ display: 'block', width: '24px', height: '2px', background: '#fff', borderRadius: '2px' }} />
+          <span style={{ display: 'block', width: '24px', height: '2px', background: '#fff', borderRadius: '2px' }} />
+          <span style={{ display: 'block', width: '24px', height: '2px', background: '#fff', borderRadius: '2px' }} />
+        </button>
+      </div>
 
-          {/* Menu na dużych ekranach */}
-          <div className="hidden md:flex space-x-6">
-            {LINKI_MENU.map(link => (
-              <Link
-                key={link.do}
-                to={link.do}
-                className={`hover:${LINK_AKTYWNY_KOLOR} transition-colors ${
-                  lokalizacja.pathname === link.do ? `${LINK_AKTYWNY_KOLOR} font-semibold` : ''
-                }`}
-              >
-                {link.tekst}
-              </Link>
-            ))}
-          </div>
+      {/* Ciemne tło — kliknięcie zamyka menu */}
+      {otwarte && (
+        <div
+          onClick={zamknij}
+          style={{
+            position: 'fixed', inset: 0, zIndex: 200,
+            background: 'rgba(0,0,0,0.5)',
+          }}
+        />
+      )}
 
-          {/* Przycisk hamburgera na telefonach */}
-          <button
-            className="md:hidden text-white"
-            onClick={() => setMenuOtwarte(!menuOtwarte)}
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              {menuOtwarte
-                ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              }
-            </svg>
-          </button>
+      {/* Wysuwany panel z lewej strony */}
+      <div style={{
+        position: 'fixed', top: 0, left: 0, bottom: 0, zIndex: 300,
+        width: '280px',
+        background: '#111827',
+        transform: otwarte ? 'translateX(0)' : 'translateX(-100%)',
+        transition: 'transform 0.3s ease',
+        display: 'flex', flexDirection: 'column',
+      }}>
+
+        {/* Nagłówek panelu z przyciskiem X */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 1.25rem', borderBottom: '1px solid #374151' }}>
+          <span style={{ color: '#fff', fontWeight: 700, fontSize: '1rem' }}>Menu</span>
+          <button onClick={zamknij} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9ca3af', fontSize: '1.4rem', lineHeight: 1 }}>✕</button>
         </div>
 
-        {/* Menu mobilne — pojawia się po kliknięciu hamburgera */}
-        {menuOtwarte && (
-          <div className="md:hidden pb-4 flex flex-col space-y-2">
-            {LINKI_MENU.map(link => (
-              <Link
-                key={link.do}
-                to={link.do}
-                onClick={() => setMenuOtwarte(false)}
-                className={`py-2 hover:${LINK_AKTYWNY_KOLOR} transition-colors ${
-                  lokalizacja.pathname === link.do ? `${LINK_AKTYWNY_KOLOR} font-semibold` : ''
-                }`}
-              >
-                {link.tekst}
-              </Link>
-            ))}
-          </div>
-        )}
+        {/* Linki nawigacyjne */}
+        <nav style={{ flex: 1, padding: '1rem 0' }}>
+
+          <Link to="/" onClick={zamknij} style={{
+            display: 'flex', alignItems: 'center', gap: '0.75rem',
+            padding: '0.85rem 1.25rem',
+            color: aktywny('/') ? '#fbbf24' : '#d1d5db',
+            fontWeight: aktywny('/') ? 700 : 400,
+            textDecoration: 'none',
+            background: aktywny('/') ? 'rgba(251,191,36,0.1)' : 'transparent',
+            borderLeft: aktywny('/') ? '3px solid #fbbf24' : '3px solid transparent',
+          }}>
+            <span style={{ fontSize: '1.2rem' }}>🏠</span>
+            Strona główna
+          </Link>
+
+          <Link to="/boss" onClick={zamknij} style={{
+            display: 'flex', alignItems: 'center', gap: '0.75rem',
+            padding: '0.85rem 1.25rem',
+            color: aktywny('/boss') ? '#fbbf24' : '#d1d5db',
+            fontWeight: aktywny('/boss') ? 700 : 400,
+            textDecoration: 'none',
+            background: aktywny('/boss') ? 'rgba(251,191,36,0.1)' : 'transparent',
+            borderLeft: aktywny('/boss') ? '3px solid #fbbf24' : '3px solid transparent',
+          }}>
+            <span style={{ fontSize: '1.2rem' }}>🛒</span>
+            BOSS Węgorzewo
+          </Link>
+
+          <Link to="/alkohole" onClick={zamknij} style={{
+            display: 'flex', alignItems: 'center', gap: '0.75rem',
+            padding: '0.85rem 1.25rem',
+            color: aktywny('/alkohole') ? '#fbbf24' : '#d1d5db',
+            fontWeight: aktywny('/alkohole') ? 700 : 400,
+            textDecoration: 'none',
+            background: aktywny('/alkohole') ? 'rgba(251,191,36,0.1)' : 'transparent',
+            borderLeft: aktywny('/alkohole') ? '3px solid #fbbf24' : '3px solid transparent',
+          }}>
+            <span style={{ fontSize: '1.2rem' }}>🍷</span>
+            Alkohole Świata
+          </Link>
+
+          {/* Separator */}
+          <div style={{ height: '1px', background: '#374151', margin: '0.75rem 1.25rem' }} />
+
+          <Link to="/zaloguj" onClick={zamknij} style={{
+            display: 'flex', alignItems: 'center', gap: '0.75rem',
+            padding: '0.85rem 1.25rem',
+            color: aktywny('/zaloguj') ? '#fbbf24' : '#d1d5db',
+            fontWeight: aktywny('/zaloguj') ? 700 : 400,
+            textDecoration: 'none',
+            background: aktywny('/zaloguj') ? 'rgba(251,191,36,0.1)' : 'transparent',
+            borderLeft: aktywny('/zaloguj') ? '3px solid #fbbf24' : '3px solid transparent',
+          }}>
+            <span style={{ fontSize: '1.2rem' }}>🔐</span>
+            Zaloguj się
+          </Link>
+
+        </nav>
+
+        {/* Kontakt na dole panelu */}
+        <div style={{ borderTop: '1px solid #374151', padding: '1.25rem' }}>
+          <p style={{ color: '#6b7280', fontSize: '0.75rem', marginBottom: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Kontakt</p>
+          <Link to="/kontakt" onClick={zamknij} style={{
+            display: 'flex', alignItems: 'center', gap: '0.75rem',
+            padding: '0.75rem 0',
+            color: '#d1d5db',
+            textDecoration: 'none',
+            fontSize: '0.95rem',
+          }}>
+            <span style={{ fontSize: '1.1rem' }}>✉️</span>
+            Napisz do nas
+          </Link>
+        </div>
+
       </div>
-    </nav>
+
+      {/* Odstęp pod stałym paskiem górnym */}
+      <div style={{ height: '56px' }} />
+    </>
   )
 }

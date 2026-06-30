@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import ListaProduktow from '../../components/ListaProduktow'
 
 // ============================================================
 // USTAWIENIA STRONY ALKOHOLE ŚWIATA — edytuj tylko tę sekcję
@@ -163,6 +164,14 @@ export default function AlkoholeStrona() {
             </div>
           ))}
         </div>
+      </section>
+
+      {/* Produkty z bazy danych */}
+      <section style={{ marginBottom: '60px' }}>
+        <h2 className="text-2xl font-bold text-gray-800 text-center" style={{ marginBottom: '36px' }}>
+          BESTSELLERY
+        </h2>
+        <ListaProduktow firma="ALKOHOLE" />
       </section>
 
       {/* Baner 18+ */}

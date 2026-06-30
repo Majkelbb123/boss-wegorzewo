@@ -182,10 +182,10 @@ app.post('/api/admin/produkty', async (req, res) => {
 
 app.put('/api/admin/produkty/:id', async (req, res) => {
   try {
-    const { firma, nazwa, opis, cena, kategoria, aktywny } = req.body
+    const { firma, nazwa, opis, cena, kategoria, aktywny, zdjecie_url } = req.body
     const wynik = await db.query(
-      'UPDATE produkty SET firma=$1, nazwa=$2, opis=$3, cena=$4, kategoria=$5, aktywny=$6 WHERE id=$7 RETURNING *',
-      [firma, nazwa, opis, cena, kategoria, aktywny, req.params.id]
+      'UPDATE produkty SET firma=$1, nazwa=$2, opis=$3, cena=$4, kategoria=$5, aktywny=$6, zdjecie_url=$7 WHERE id=$8 RETURNING *',
+      [firma, nazwa, opis, cena, kategoria, aktywny, zdjecie_url || null, req.params.id]
     )
     res.json(wynik.rows[0])
   } catch (blad) {

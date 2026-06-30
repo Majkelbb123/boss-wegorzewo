@@ -87,7 +87,9 @@ function Zakladki({ aktywna, setAktywna }) {
 
 function ProduktyFirmy({ firma, kolorFirmy }) {
   const [produkty, setProdukty]     = useState([])
-  const [formularz, setFormularz]   = useState({ nazwa: '', opis: '', cena: '', kategoria: '', zdjecie_url: '' })
+  const pustyFormularz              = { nazwa: '', opis: '', cena: '', kategoria: '', zdjecie_url: '' }
+  const [formularz, setFormularz]   = useState(pustyFormularz)
+  const [edytowanyId, setEdytowanyId] = useState(null)  // null = tryb dodawania, liczba = tryb edycji
   const [komunikat, setKomunikat]   = useState('')
   const [blad, setBlad]             = useState('')
 
@@ -98,22 +100,43 @@ function ProduktyFirmy({ firma, kolorFirmy }) {
 
   useEffect(() => { pobierz() }, [firma])
 
-  const dodaj = async (e) => {
+  const zacznijEdycje = (p) => {
+    // Wypełnij formularz danymi wybranego produktu i przełącz w tryb edycji
+    setFormularz({ nazwa: p.nazwa, opis: p.opis || '', cena: p.cena, kategoria: p.kategoria, zdjecie_url: p.zdjecie_url || '' })
+    setEdytowanyId(p.id)
+    setBlad('')
+    setKomunikat('')
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const anulujEdycje = () => {
+    setFormularz(pustyFormularz)
+    setEdytowanyId(null)
+    setBlad('')
+  }
+
+  const zapisz = async (e) => {
     e.preventDefault()
     setBlad('')
     setKomunikat('')
-    const odp = await fetch('/api/admin/produkty', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...formularz, firma }),
-    })
+
+    const czyEdycja = edytowanyId !== null
+    const odp = await fetch(
+      czyEdycja ? `/api/admin/produkty/${edytowanyId}` : '/api/admin/produkty',
+      {
+        method: czyEdycja ? 'PUT' : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...formularz, firma, aktywny: true }),
+      }
+    )
     const dane = await odp.json()
     if (!odp.ok) {
       setBlad('❌ ' + dane.blad)
       return
     }
-    setFormularz({ nazwa: '', opis: '', cena: '', kategoria: '', zdjecie_url: '' })
-    setKomunikat('✅ Produkt dodany do ' + firma + '!')
+    setFormularz(pustyFormularz)
+    setEdytowanyId(null)
+    setKomunikat(czyEdycja ? '✅ Zmiany zapisane!' : '✅ Produkt dodany!')
     pobierz()
     setTimeout(() => setKomunikat(''), 3000)
   }
@@ -121,8 +144,11 @@ function ProduktyFirmy({ firma, kolorFirmy }) {
   const usun = async (id) => {
     if (!confirm('Usunąć ten produkt?')) return
     await fetch(`/api/admin/produkty/${id}`, { method: 'DELETE' })
+    if (edytowanyId === id) anulujEdycje()
     pobierz()
   }
+
+  const trybEdycji = edytowanyId !== null
 
   return (
     <div>
@@ -136,10 +162,12 @@ function ProduktyFirmy({ firma, kolorFirmy }) {
         </h2>
       </div>
 
-      {/* Formularz dodawania */}
-      <div style={{ background: '#f9fafb', border: '1px solid #e5e7eb', borderRadius: '12px', padding: '1.5rem', marginBottom: '1.5rem' }}>
-        <h3 style={{ fontWeight: 700, marginBottom: '1rem', fontSize: '0.95rem' }}>+ Dodaj produkt do {firma === 'BOSS' ? 'BOSS' : 'Alkohole Świata'}</h3>
-        <form onSubmit={dodaj} style={{ display: 'grid', gap: '0.75rem' }}>
+      {/* Formularz dodawania / edycji */}
+      <div style={{ background: trybEdycji ? '#fffbeb' : '#f9fafb', border: `1px solid ${trybEdycji ? '#fcd34d' : '#e5e7eb'}`, borderRadius: '12px', padding: '1.5rem', marginBottom: '1.5rem' }}>
+        <h3 style={{ fontWeight: 700, marginBottom: '1rem', fontSize: '0.95rem' }}>
+          {trybEdycji ? '✏️ Edytujesz produkt' : `+ Dodaj produkt do ${firma === 'BOSS' ? 'BOSS' : 'Alkohole Świata'}`}
+        </h3>
+        <form onSubmit={zapisz} style={{ display: 'grid', gap: '0.75rem' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
             <input placeholder="Nazwa produktu *" required value={formularz.nazwa} onChange={e => setFormularz({...formularz, nazwa: e.target.value})} style={styl.input} />
             <input placeholder="Kategoria" value={formularz.kategoria} onChange={e => setFormularz({...formularz, kategoria: e.target.value})} style={styl.input} />
@@ -147,7 +175,16 @@ function ProduktyFirmy({ firma, kolorFirmy }) {
           <input placeholder="Opis" value={formularz.opis} onChange={e => setFormularz({...formularz, opis: e.target.value})} style={styl.input} />
           <input placeholder="Cena (np. 4.99) *" type="number" step="0.01" required value={formularz.cena} onChange={e => setFormularz({...formularz, cena: e.target.value})} style={styl.input} />
           <input placeholder="Link do zdjęcia (opcjonalnie — np. https://...jpg)" value={formularz.zdjecie_url} onChange={e => setFormularz({...formularz, zdjecie_url: e.target.value})} style={styl.input} />
-          <button type="submit" style={styl.przycisk}>+ Dodaj produkt</button>
+          <div style={{ display: 'flex', gap: '0.75rem' }}>
+            <button type="submit" style={{ ...styl.przycisk, flex: 1, background: trybEdycji ? '#d97706' : '#1a1a1a' }}>
+              {trybEdycji ? '💾 Zapisz zmiany' : '+ Dodaj produkt'}
+            </button>
+            {trybEdycji && (
+              <button type="button" onClick={anulujEdycje} style={{ ...styl.przycisk, background: '#6b7280', flex: 'none', padding: '0.7rem 1.25rem' }}>
+                Anuluj
+              </button>
+            )}
+          </div>
           {komunikat && <p style={{ color: 'green',   fontWeight: 600, margin: 0 }}>{komunikat}</p>}
           {blad      && <p style={{ color: '#dc2626', fontWeight: 600, margin: 0 }}>{blad}</p>}
         </form>
@@ -159,7 +196,7 @@ function ProduktyFirmy({ firma, kolorFirmy }) {
           <p style={{ color: '#888', textAlign: 'center', padding: '1rem' }}>Brak produktów — dodaj pierwszy powyżej.</p>
         )}
         {produkty.map(p => (
-          <div key={p.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#fff', border: '1px solid #e5e7eb', borderRadius: '10px', padding: '0.75rem 1rem', gap: '0.75rem' }}>
+          <div key={p.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: edytowanyId === p.id ? '#fffbeb' : '#fff', border: `1px solid ${edytowanyId === p.id ? '#fcd34d' : '#e5e7eb'}`, borderRadius: '10px', padding: '0.75rem 1rem', gap: '0.75rem' }}>
             {/* miniaturka zdjęcia */}
             <div style={{ width: '48px', height: '48px', borderRadius: '8px', background: '#f3f4f6', flexShrink: 0, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {p.zdjecie_url
@@ -172,6 +209,9 @@ function ProduktyFirmy({ firma, kolorFirmy }) {
               <strong>{p.nazwa}</strong>
               {p.cena && <span style={{ color: '#555', marginLeft: '0.75rem', fontWeight: 600 }}>{parseFloat(p.cena).toFixed(2)} zł</span>}
             </div>
+            <button onClick={() => zacznijEdycje(p)} style={{ background: '#fef3c7', border: 'none', borderRadius: '8px', padding: '0.4rem 0.75rem', cursor: 'pointer', color: '#d97706', flexShrink: 0 }}>
+              Edytuj
+            </button>
             <button onClick={() => usun(p.id)} style={{ background: '#fee2e2', border: 'none', borderRadius: '8px', padding: '0.4rem 0.75rem', cursor: 'pointer', color: '#dc2626', flexShrink: 0 }}>
               Usuń
             </button>
