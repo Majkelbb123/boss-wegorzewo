@@ -87,6 +87,21 @@ app.get('/api/aktualnosci', async (req, res) => {
   }
 })
 
+// GET /api/aktualnosci/:id → jedna aktualność po ID
+app.get('/api/aktualnosci/:id', async (req, res) => {
+  try {
+    const wynik = await db.query(
+      'SELECT * FROM aktualnosci WHERE id = $1 AND aktywna = true',
+      [req.params.id]
+    )
+    if (wynik.rows.length === 0) return res.status(404).json({ blad: 'Nie znaleziono aktualności' })
+    res.json(wynik.rows[0])
+  } catch (blad) {
+    console.error(blad)
+    res.status(500).json({ blad: 'Nie udało się pobrać aktualności' })
+  }
+})
+
 // ─── SKLEPY ──────────────────────────────────────────────────
 // GET /api/sklepy          → oba sklepy
 // GET /api/sklepy?id=1     → jeden sklep po id

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 export default function Aktualnosci() {
   const [aktualnosci, setAktualnosci] = useState([])
@@ -86,49 +87,63 @@ export default function Aktualnosci() {
       {/* Lista aktualności */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
         {aktualnosci.map(a => (
-          <article
+          <Link
             key={a.id}
-            style={{
-              background: '#fff',
-              borderRadius: '14px',
-              boxShadow: '0 2px 12px rgba(0,0,0,0.07)',
-              overflow: 'hidden',
-              border: '1px solid #f3f4f6',
-            }}
+            to={`/aktualnosci/${a.id}`}
+            style={{ textDecoration: 'none' }}
           >
-            {/* Pasek koloru firmy na górze karty */}
-            <div style={{ height: '4px', background: kolorFirmy(a.firma) }} />
+            <article
+              style={{
+                background: '#fff',
+                borderRadius: '14px',
+                boxShadow: '0 2px 12px rgba(0,0,0,0.07)',
+                overflow: 'hidden',
+                border: '1px solid #f3f4f6',
+                cursor: 'pointer',
+                transition: 'box-shadow 0.2s, transform 0.2s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 6px 24px rgba(0,0,0,0.13)'; e.currentTarget.style.transform = 'translateY(-2px)' }}
+              onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 2px 12px rgba(0,0,0,0.07)'; e.currentTarget.style.transform = 'translateY(0)' }}
+            >
+              {/* Pasek koloru firmy na górze karty */}
+              <div style={{ height: '4px', background: kolorFirmy(a.firma) }} />
 
-            <div style={{ padding: '1.5rem' }}>
-              {/* Znacznik firmy + data */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem', flexWrap: 'wrap', gap: '0.5rem' }}>
-                <span style={{
-                  display: 'inline-block',
-                  padding: '0.25rem 0.85rem',
-                  borderRadius: '999px',
-                  background: tloFirmy(a.firma),
-                  color: kolorFirmy(a.firma),
-                  fontSize: '0.8rem',
-                  fontWeight: 700,
-                }}>
-                  {a.firma === 'BOSS' ? '🛒 BOSS Węgorzewo' : '🍷 Alkohole Świata'}
-                </span>
-                <span style={{ color: '#9ca3af', fontSize: '0.85rem' }}>
-                  {formatujDate(a.created_at)}
+              <div style={{ padding: '1.5rem' }}>
+                {/* Znacznik firmy + data */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+                  <span style={{
+                    display: 'inline-block',
+                    padding: '0.25rem 0.85rem',
+                    borderRadius: '999px',
+                    background: tloFirmy(a.firma),
+                    color: kolorFirmy(a.firma),
+                    fontSize: '0.8rem',
+                    fontWeight: 700,
+                  }}>
+                    {a.firma === 'BOSS' ? '🛒 BOSS Węgorzewo' : '🍷 Alkohole Świata'}
+                  </span>
+                  <span style={{ color: '#9ca3af', fontSize: '0.85rem' }}>
+                    {formatujDate(a.created_at)}
+                  </span>
+                </div>
+
+                {/* Tytuł */}
+                <h2 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#111', marginBottom: '0.6rem', lineHeight: 1.3 }}>
+                  {a.tytul}
+                </h2>
+
+                {/* Skrócona treść — pierwsze 150 znaków */}
+                <p style={{ color: '#4b5563', lineHeight: 1.7, fontSize: '0.95rem', margin: '0 0 0.75rem 0' }}>
+                  {a.tresc.length > 150 ? a.tresc.slice(0, 150) + '…' : a.tresc}
+                </p>
+
+                {/* Przycisk "czytaj więcej" */}
+                <span style={{ color: kolorFirmy(a.firma), fontSize: '0.9rem', fontWeight: 600 }}>
+                  Czytaj więcej →
                 </span>
               </div>
-
-              {/* Tytuł */}
-              <h2 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#111', marginBottom: '0.6rem', lineHeight: 1.3 }}>
-                {a.tytul}
-              </h2>
-
-              {/* Treść */}
-              <p style={{ color: '#4b5563', lineHeight: 1.7, fontSize: '0.95rem', margin: 0 }}>
-                {a.tresc}
-              </p>
-            </div>
-          </article>
+            </article>
+          </Link>
         ))}
       </div>
 
