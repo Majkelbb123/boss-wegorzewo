@@ -113,11 +113,11 @@ export default function Logowanie() {
           {sukces ? (
             // Komunikat po udanej rejestracji
             <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '10px', padding: '1.25rem', textAlign: 'center' }}>
-              <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>📧</div>
-              <p style={{ color: '#166534', fontWeight: 600, marginBottom: '0.5rem' }}>Sprawdź skrzynkę email!</p>
+              <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>✅</div>
+              <p style={{ color: '#166534', fontWeight: 600, marginBottom: '0.5rem' }}>Konto założone!</p>
               <p style={{ color: '#15803d', fontSize: '0.9rem' }}>{sukces}</p>
               <button onClick={() => { setSukces(''); setTryb('logowanie') }} style={{ ...s.przycisk, marginTop: '1rem', display: 'inline-block' }}>
-                Przejdź do logowania
+                Zaloguj się
               </button>
             </div>
           ) : (

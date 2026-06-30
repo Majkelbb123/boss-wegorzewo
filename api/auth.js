@@ -40,39 +40,13 @@ router.post('/rejestracja', async (req, res) => {
     // Zaszyfruj hasło (bcrypt robi to automatycznie — nie da się odczytać)
     const haslo_hash = await bcrypt.hash(haslo, 12)
 
-    // Generuj losowy token potwierdzający (64 znaki)
-    const token_email = crypto.randomBytes(32).toString('hex')
-
-    // Zapisz użytkownika do bazy
+    // Zapisz użytkownika do bazy — od razu aktywny (potwierdzony = true)
     await db.query(
-      'INSERT INTO uzytkownicy (email, haslo_hash, token_email) VALUES ($1, $2, $3)',
-      [email.toLowerCase(), haslo_hash, token_email]
+      'INSERT INTO uzytkownicy (email, haslo_hash, potwierdzony) VALUES ($1, $2, true)',
+      [email.toLowerCase(), haslo_hash]
     )
 
-    // Wyślij email z linkiem potwierdzającym
-    const link = `${ADRES_STRONY}/potwierdz-email?token=${token_email}`
-
-    await transporter.sendMail({
-      from:    `"BOSS & Alkohole Świata" <${process.env.SMTP_USER}>`,
-      to:      email,
-      subject: 'Potwierdź swój adres email',
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; padding: 2rem;">
-          <h2 style="color: #111827;">Witaj w BOSS & Alkohole Świata!</h2>
-          <p style="color: #4b5563;">Kliknij przycisk poniżej, aby potwierdzić swój adres email i aktywować konto.</p>
-          <a href="${link}"
-             style="display: inline-block; margin: 1.5rem 0; padding: 0.85rem 2rem; background: #111827; color: #fff; text-decoration: none; border-radius: 10px; font-weight: bold;">
-            Potwierdź email
-          </a>
-          <p style="color: #9ca3af; font-size: 0.85rem;">
-            Jeśli nie zakładałeś konta — zignoruj tę wiadomość.<br>
-            Link jest ważny przez 24 godziny.
-          </p>
-        </div>
-      `,
-    })
-
-    res.json({ sukces: true, wiadomosc: 'Rejestracja udana! Sprawdź swoją skrzynkę email i kliknij link potwierdzający.' })
+    res.json({ sukces: true, wiadomosc: 'Rejestracja udana! Możesz się teraz zalogować.' })
 
   } catch (blad) {
     console.error('Błąd rejestracji:', blad)
@@ -116,11 +90,6 @@ router.post('/logowanie', async (req, res) => {
     const user  = wynik.rows[0]
 
     if (!user) return res.status(401).json({ blad: 'Nieprawidłowy email lub hasło' })
-
-    // Sprawdź czy email potwierdzony
-    if (!user.potwierdzony) {
-      return res.status(401).json({ blad: 'Najpierw potwierdź swój adres email — sprawdź skrzynkę pocztową' })
-    }
 
     // Sprawdź hasło
     const hasloPoprawne = await bcrypt.compare(haslo, user.haslo_hash)
